@@ -14,8 +14,5 @@ del /q /f .vsconfig, MySolution.sln
 rem ## Displays a message indicating that the folder has been deleted.
 echo All files are deleted successfully.
 
-rem ## Set Path of Project 
-set MyFullPath="%cd%\CardGame_ICAN_5JV_1"
-
 rem ## Keeps the command prompt window open after execution, so you can see the result. You can remove this line if you don't want the window to stay open
 pause
