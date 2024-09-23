@@ -73,3 +73,4 @@ Plugins/**/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 .idea/.idea.CardGame_ICAN_5JV_1.dir/.idea/indexLayout.xml
+/.idea
