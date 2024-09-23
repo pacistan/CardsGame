@@ -16,15 +16,15 @@ class CARDGAME_ICAN_5JV_1_API UFSM_Gameplay : public UActorComponent
 public:
 	
 protected:
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleDefaultsOnly)
 	TObjectPtr<UBaseState> m_CurrentState;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UBaseState> m_StartState;
 	
 	/* ------------------------------------------ FUNCTIONS -----------------------------------------*/
 public:
-	UFUNCTION(Blueprintable, BlueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	bool ChangeStateWithClass(TSubclassOf<UBaseState> NewStateClass);
 
 	

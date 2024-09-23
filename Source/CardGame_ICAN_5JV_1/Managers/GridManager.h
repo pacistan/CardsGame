@@ -12,16 +12,20 @@ class CARDGAME_ICAN_5JV_1_API UGridManager : public UActorComponent
 {
 	GENERATED_BODY()
 
+	/* ------------------------------------------ MEMBERS -------------------------------------------*/
+	UPROPERTY(EditDefaultsOnly)
+	int32 m_Rows;
+	
+	
+	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
-	// Sets default values for this component's properties
 	UGridManager();
 
+	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 };

@@ -20,6 +20,9 @@ public:
 
 protected:
 	UPROPERTY()
+	TObjectPtr<UGridManager> m_GridManager;
+	
+	UPROPERTY()
 	TObjectPtr<UFSM_Gameplay> m_FSM;
 
 };
