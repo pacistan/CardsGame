@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\CardGame_ICAN_5JV_1.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CardGame_ICAN_5JV_1.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\CardGame_ICAN_5JV_1Editor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\CardGame_ICAN_5JV_1">
+      <UniqueIdentifier>{AE0F15FD-E035-35EF-A7C8-3FFC1CA503CA}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\CardGame_ICAN_5JV_1\CardGame_ICAN_5JV_1.Build.cs">
+      <Filter>Source\CardGame_ICAN_5JV_1</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\CardGame_ICAN_5JV_1\CardGame_ICAN_5JV_1.cpp">
+      <Filter>Source\CardGame_ICAN_5JV_1</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CardGame_ICAN_5JV_1\CardGame_ICAN_5JV_1.h">
+      <Filter>Source\CardGame_ICAN_5JV_1</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "CardGame_ICAN_5JV_1",
+			"Path": "..\\Source\\CardGame_ICAN_5JV_1.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "CardGame_ICAN_5JV_1Editor",
+			"Path": "..\\Source\\CardGame_ICAN_5JV_1Editor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

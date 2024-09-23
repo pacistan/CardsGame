@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-CardGame_ICAN_5JV_1.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\andre\Documents\Github\ICAN\CardsGame\CardGame_ICAN_5JV_1\Intermediate\Build\Win64\x64\CardGame_ICAN_5JV_1Editor\Development\Engine\SharedPCH.Engine.Cpp20.h.obj"
+"C:\Users\andre\Documents\Github\ICAN\CardsGame\CardGame_ICAN_5JV_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\CardGame_ICAN_5JV_1\CardGame_ICAN_5JV_1.cpp.obj"
+"C:\Users\andre\Documents\Github\ICAN\CardsGame\CardGame_ICAN_5JV_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\CardGame_ICAN_5JV_1\Default.rc2.res"
+/OUT:"C:\Users\andre\Documents\Github\ICAN\CardsGame\CardGame_ICAN_5JV_1\Intermediate\Build\Win64\x64\UnrealEditor\Development\CardGame_ICAN_5JV_1\UnrealEditor-CardGame_ICAN_5JV_1.lib"
