@@ -19,10 +19,10 @@ public:
 
 
 protected:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	TObjectPtr<UGridManager> m_GridManager;
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	TObjectPtr<UFSM_Gameplay> m_FSM;
 
 };

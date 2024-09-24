@@ -7,7 +7,7 @@
 #include "GridManager.generated.h"
 
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup=(Custom), BlueprintType, meta=(BlueprintSpawnableComponent))
 class CARDGAME_ICAN_5JV_1_API UGridManager : public UActorComponent
 {
 	GENERATED_BODY()
