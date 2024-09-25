@@ -7,6 +7,7 @@
 #include "CardActor.generated.h"
 
 class UWidgetComponent;
+class UStaticMeshComponent;
 class UCardData_Base;
 
 UCLASS()
@@ -29,7 +30,6 @@ protected:
 	
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public:
-
-	
+	ACardActor(FObjectInitializer const& ObjectInitializer);
 	
 };

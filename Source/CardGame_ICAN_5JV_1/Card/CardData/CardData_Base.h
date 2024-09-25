@@ -8,7 +8,6 @@
 #include "Engine/DataAsset.h"
 #include "CardData_Base.generated.h"
 
-struct FGameplayTag;
 class UCardPropertyBase;
 
 /**
@@ -43,7 +42,8 @@ protected:
 	
 	/* ------------------------------------------ METHODS ------------------------------------------- */
 public:
-	DECLARE_GETTER(CardName,m_CardName,FName);
+	
+	DECLARE_GETTER(CardName,m_CardName, FName);
 	DECLARE_GETTER(CardDescription,m_CardDescription,FString);
 	DECLARE_GETTER(CardImage,m_CardImage,UTexture2D*);
 	DECLARE_GETTER(CardCost,m_CardCost,int);

@@ -6,7 +6,7 @@
 #include "Components/WidgetComponent.h"
 
 
-ACardActor::ACardActor() 
+ACardActor::ACardActor(FObjectInitializer const& ObjectInitializer) : Super(ObjectInitializer)
 {
 	m_CardMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Card Mesh"));
 	m_CardWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Card Widget"));
