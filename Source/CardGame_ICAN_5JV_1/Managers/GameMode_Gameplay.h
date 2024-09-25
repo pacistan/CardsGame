@@ -7,7 +7,7 @@
 #include "GameMode_Gameplay.generated.h"
 
 class UFSM_Gameplay;
-class UGridManager;
+class AGridManager;
 
 UCLASS()
 class CARDGAME_ICAN_5JV_1_API AGameMode_Gameplay : public AGameModeBase
@@ -20,9 +20,5 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
-	TObjectPtr<UGridManager> m_GridManager;
-	
-	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	TObjectPtr<UFSM_Gameplay> m_FSM;
-
 };
