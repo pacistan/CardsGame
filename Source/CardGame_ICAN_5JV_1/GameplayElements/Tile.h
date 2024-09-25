@@ -44,6 +44,9 @@ protected:
 
 	void SetColumn(const int32& column) {m_Column = column;};
 
+public:
+	const int32 GetRow() const {return m_Row;};
+	const int32 GetColumn() const {return m_Column;};
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
 	ATile();
