@@ -77,7 +77,7 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	return;
 	TArray<AActor*> tiles;
 	
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATile::StaticClass(), tiles);
