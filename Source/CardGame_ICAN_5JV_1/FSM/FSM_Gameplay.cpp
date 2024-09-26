@@ -1,4 +1,7 @@
 ﻿#include "FSM_Gameplay.h"
+
+#include "CardGame_ICAN_5JV_1/CardGame_ICAN_5JV_1.h"
+#include "CardGame_ICAN_5JV_1/Macro/LogMacro.h"
 #include "States/BaseState.h"
 #include "States/State_DrawPhase.h"
 
@@ -21,7 +24,6 @@ bool UFSM_Gameplay::ChangeStateWithClass(TSubclassOf<UBaseState> NewStateClass)
 	
 	m_CurrentState = UBaseState::MakeStateWithClass(NewStateClass, GetOwner());
 	m_CurrentState->OnExitState();
-	
 	return true;
 }
 
