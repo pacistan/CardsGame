@@ -7,8 +7,8 @@ public class CardGame_ICAN_5JV_1 : ModuleRules
 	public CardGame_ICAN_5JV_1(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "GameplayTags", "DeveloperSettings"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
