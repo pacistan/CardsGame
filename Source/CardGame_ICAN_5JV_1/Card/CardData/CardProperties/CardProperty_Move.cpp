@@ -4,8 +4,8 @@
 #include "CardProperty_Move.h"
 
 
-bool UCardProperty_Move::Behvaviors()
+bool UCardProperty_Move::Behvaviors(ATile* TargetTile)
 {
-	// TODO 
-	return Super::Behvaviors();
+	// TODO : Check if the target tile is valid
+	return Super::Behvaviors(TargetTile);
 }

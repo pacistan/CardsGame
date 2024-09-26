@@ -4,16 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "CardPropertyBase.h"
-#include "CardProperty_Move.generated.h"
+#include "CardProperty_Summon.generated.h"
+
+class ATileObject_Unit;
 
 /**
- * 
+ *  Property to summon a unit on the board
  */
-UCLASS(DisplayName = "Move")
-class CARDGAME_ICAN_5JV_1_API UCardProperty_Move : public UCardPropertyBase
+UCLASS(DisplayName = "Summon")
+class CARDGAME_ICAN_5JV_1_API UCardProperty_Summon : public UCardPropertyBase
 {
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<ATileObject_Unit> m_CardObjectClassToSummon;
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:

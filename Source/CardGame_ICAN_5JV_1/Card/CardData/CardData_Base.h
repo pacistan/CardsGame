@@ -17,6 +17,7 @@ UCLASS()
 class CARDGAME_ICAN_5JV_1_API UCardData_Base : public UDataAsset
 {
 	GENERATED_BODY()
+	// TODO : find a way to add condition of target for each cards (ex : target a tile, target a unit, target a player)
 	/* ------------------------------------------ MEMBERS ------------------------------------------- */
 protected:
 	UPROPERTY(EditAnywhere, DisplayName = "Card Name")
