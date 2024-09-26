@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "CardPropertyBase.h"
-#include "CardProperty_Move.generated.h"
+#include "CardProperty_PlaceObject.generated.h"
 
 /**
  * 
  */
-UCLASS(DisplayName = "Move")
-class CARDGAME_ICAN_5JV_1_API UCardProperty_Move : public UCardPropertyBase
+UCLASS()
+class CARDGAME_ICAN_5JV_1_API UCardProperty_PlaceObject : public UCardPropertyBase
 {
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
-protected:
+public:
 	virtual bool Behvaviors(ATile* TargetTile) override;
 };
