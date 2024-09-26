@@ -1,5 +1,6 @@
 #include "P_Controller.h"
 #include "EnhancedInputComponent.h"
+#include "CardGame_ICAN_5JV_1/Card/CardActor.h"
 #include "CardGame_ICAN_5JV_1/Macro/LogMacro.h"
 
 void AP_Controller::SetupInputComponent()
@@ -23,11 +24,11 @@ void AP_Controller::OnSelectCard()
 
 	if (HitResult.bBlockingHit)
 	{
-		//ACard* HitCard = Cast<ACard>(HitResult.Actor);
-		//if (HitCard)
-		//{
-		//	m_SelectedCard = HitCard;
-		//}
+		ACardActor* HitCard = Cast<ACardActor>(HitResult.GetActor());
+		if (HitCard)
+		{
+			m_SelectedCard = HitCard;
+		}
 	}
 }
 
@@ -35,18 +36,18 @@ void AP_Controller::OnDragCard()
 {
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Drag Card"));
 	//	DEBUG_LOG_SCREEN_SIMPLE(TEXT("DragCard"));
-	//if (m_SelectedCard)
-	//{
-	//	FVector NewLocation = GetMouseLocationInWorld();
-	//	m_SelectedCard->SetActorLocation(NewLocation);
-	//}
+	if (IsValid(m_SelectedCard))
+	{
+		FVector NewLocation = GetMouseLocationInWorld();
+		m_SelectedCard->SetActorLocation(NewLocation);
+	}
 }
 
 void AP_Controller::OnReleaseCard()
 {
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Release Card"));
 	//DEBUG_LOG_SCREEN_SIMPLE(TEXT("ReleaseCard"));
-	//m_SelectedCard = nullptr;
+	m_SelectedCard = nullptr;
 }
 
 FVector AP_Controller::GetMouseLocationInWorld()

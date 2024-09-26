@@ -6,6 +6,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class ACardActor;
 
 UCLASS()
 class CARDGAME_ICAN_5JV_1_API AP_Controller : public APlayerController
@@ -30,8 +31,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayerPawn|Input", meta=(DisplayName = "Left Click Release Action"))
 	UInputAction* m_IA_ReleaseCard;
 
-	//UPROPERTY()
-	//TObjectPtr<ACard> m_SelectedCard;
+	UPROPERTY()
+	TObjectPtr<ACardActor> m_SelectedCard;
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 private:
