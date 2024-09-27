@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CardGame_ICAN_5JV_1/Macro/GetSetMacro.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameMode_Gameplay.generated.h"
 
@@ -14,11 +15,12 @@ class CARDGAME_ICAN_5JV_1_API AGameMode_Gameplay : public AGameModeBase
 {
 	GENERATED_UCLASS_BODY()
 
-public:
-	//TODO: Make a getter for FSM
-
-
+	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 protected:
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	TObjectPtr<UFSM_Gameplay> m_FSM;
+
+	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
+public:
+	DECLARE_GETTER(GetFSM, m_FSM, TObjectPtr<UFSM_Gameplay>)
 };

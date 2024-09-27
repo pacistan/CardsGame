@@ -45,8 +45,10 @@ private:
 	UFUNCTION()
 	void OnReleaseCard();
 	FVector GetMouseLocationInWorld();
+	void AddDefaultMappingContext();
 
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
-
+	virtual void BeginPlay() override;
+	
 	virtual void SetupInputComponent() override;
 };

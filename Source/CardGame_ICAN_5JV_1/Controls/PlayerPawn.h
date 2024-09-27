@@ -16,7 +16,7 @@ class CARDGAME_ICAN_5JV_1_API APlayerPawn : public APawn
 	
 public:
 	APlayerPawn();
-	
+
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 	
 protected:

@@ -1,5 +1,6 @@
 #include "P_Controller.h"
 #include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 #include "CardGame_ICAN_5JV_1/Card/CardActor.h"
 #include "CardGame_ICAN_5JV_1/Macro/LogMacro.h"
 
@@ -57,4 +58,17 @@ FVector AP_Controller::GetMouseLocationInWorld()
 
 	FVector NewLocation = WorldLocation + (WorldDirection * m_DistanceFromCamera);
 	return NewLocation;
+}
+
+void AP_Controller::AddDefaultMappingContext()
+{
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer())) {
+		Subsystem->AddMappingContext(m_IMC_Default, 0);
+	}
+}
+
+void AP_Controller::BeginPlay()
+{
+	Super::BeginPlay();
+	AddDefaultMappingContext();
 }

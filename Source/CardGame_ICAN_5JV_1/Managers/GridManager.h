@@ -71,6 +71,4 @@ protected:
 	
 public:
 	virtual void Tick(float DeltaTime) override;
-
-	friend class AGameMode_Gameplay;
 };
