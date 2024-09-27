@@ -33,7 +33,7 @@ void AGridManager::InitializeGrid()
 			FActorSpawnParameters SpawnParams;
 			FVector SpawnLocation = FVector(i * 100 * m_TileWidth + i * 100 * m_TileSpacing, j * 100 * m_TileWidth + j * 100 * m_TileSpacing, 0);
 			FRotator SpawnRotation = FRotator(0, 0, 0);
-			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(m_TileBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
+			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(m_TileBP, SpawnLocation, SpawnRotation, SpawnParams);
 #if WITH_EDITOR
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
 #endif
@@ -77,6 +77,21 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
+	return;
+	TArray<AActor*> tiles;
+	
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATile::StaticClass(), tiles);
+	m_GridTiles = *new TArray<FTileArray>[m_RowNum];
+	for(auto tileArray : m_GridTiles)
+	{
+		tileArray.NestedTileArray = *new TArray<TObjectPtr<ATile>>[m_ColumnNum];
+	}
+
+	for(const auto item : tiles)
+	{
+		ATile* tile = Cast<ATile>(item);
+		m_GridTiles[tile->GetRow()].NestedTileArray[tile->GetColumn()] = tile;
+	}
 }
 
 
