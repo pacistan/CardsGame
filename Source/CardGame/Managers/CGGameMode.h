@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "CardGame_ICAN_5JV_1/Macro/GetSetMacro.h"
 #include "GameFramework/GameModeBase.h"
-#include "CGGameMode.generated.h"
+#include "GameMode_Gameplay.generated.h"
 
-class UCGFSM;
-class ACGGridManager;
+class APlayerPawn;
+class UFSM_Gameplay;
+class AGridManager;
 
 UCLASS()
-class CARDGAME_API ACGGameMode : public AGameModeBase
+class CARDGAME_ICAN_5JV_1_API AGameMode_Gameplay : public AGameModeBase
 {
 	GENERATED_UCLASS_BODY()
 
@@ -20,7 +21,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	TObjectPtr<UFSM_Gameplay> m_FSM;
 
+	UPROPERTY()
+	TArray<TObjectPtr<APlayerPawn>> m_Players;
+	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
-	DECLARE_GETTER(GetFSM, m_FSM, TObjectPtr<UFSM_Gameplay>)
+	DECLARE_GETTER(FSM, m_FSM, TObjectPtr<UFSM_Gameplay>);
+	DECLARE_GETTER(PlayerPawn, m_Players, TArray<TObjectPtr<APlayerPawn>>);
+
+	void RegisterPlayerPawn(APlayerPawn* Player);
+
+	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
+	virtual void BeginPlay() override;
+	
 };
