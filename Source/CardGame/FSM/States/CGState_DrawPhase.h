@@ -12,4 +12,7 @@ UCLASS()
 class CARDGAME_API UCGState_DrawPhase : public UCGBaseState
 {
 	GENERATED_BODY()
+
+	virtual void OnEnterState() override;
+	
 };

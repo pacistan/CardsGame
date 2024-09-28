@@ -1,4 +1,7 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿#include "CGState_DrawPhase.h"
+#include "CardGame_ICAN_5JV_1/Managers/GameMode_Gameplay.h"
 
-
-#include "CGState_DrawPhase.h"
+void UCGState_DrawPhase::OnEnterState()
+{
+	Super::OnEnterState();
+}
