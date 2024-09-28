@@ -9,3 +9,14 @@ AGameMode_Gameplay::AGameMode_Gameplay(const FObjectInitializer& fObj) : Super(f
 	m_FSM = CreateDefaultSubobject<UFSM_Gameplay>(TEXT("Finite State Machine"));
 }
 
+void AGameMode_Gameplay::BeginPlay()
+{
+	Super::BeginPlay();
+	m_Players = *new TArray<TObjectPtr<APlayerPawn>>;
+}
+
+void AGameMode_Gameplay::RegisterPlayerPawn(APlayerPawn* Player)
+{
+	m_Players.Add(Player);
+}
+
