@@ -12,4 +12,7 @@ UCLASS()
 class CARDGAME_ICAN_5JV_1_API UState_DrawPhase : public UBaseState
 {
 	GENERATED_BODY()
+
+	virtual void OnEnterState() override;
+	
 };
