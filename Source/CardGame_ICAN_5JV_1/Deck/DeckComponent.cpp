@@ -41,9 +41,6 @@ bool UDeckComponent::CreateCard(ACardActor* CreatedCard)
 		DEBUG_ERROR("Wrong Input type for card : %s", CardData->GetCardName());
 		return false;
 	}
-#if WITH_EDITOR
-	CreatedCard->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
-#endif
 	CreatedCard->AttachToActor(GetOwner(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 
 	return true;
