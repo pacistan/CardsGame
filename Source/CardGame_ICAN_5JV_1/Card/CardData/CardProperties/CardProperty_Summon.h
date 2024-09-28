@@ -22,5 +22,5 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	virtual bool Behvaviors(ATile* TargetTile) override;
+	virtual bool Behvaviors(ATile* TargetTile, APawn* CardOwner) override;
 };

@@ -1,9 +1,59 @@
 ﻿#include "Tile.h"
 
+#include "TileObject/TileObject_Object.h"
+#include "TileObject/TileObject_Unit.h"
+
 
 ATile::ATile()
 {
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+bool ATile::CanSummonOnTile(APawn* Player) const
+{
+	// TODO Check if the player can summon on this tile
+	// - Check if this a tile that is in his base  (if the player is the owner of the tile)
+	return true;
+}
+
+bool ATile::CanPlaceObjectOnTile(APawn* Player) const
+{
+	// TODO Check if the player can place an object on this tile
+	// - Check if this a tile that is in his base  (if the player is the owner of the tile)
+	// - Or if the tile is in the middle of the map
+	return true;
+}
+
+bool ATile::CanMoveOnTile(ATileObject_Unit* Unit, APawn* Player) const
+{
+	// TODO Check if the player can move on this tile
+	// - Check if this a tile that is in his base (if the player is the owner of the tile)
+	// - if there is no Object that block this Tile ?
+	return true;
+}
+
+bool ATile::SummonOnTile(TSubclassOf<ATileObject_Unit> Class, APawn* Player)
+{
+	if (!IsValid(Player) || !IsValid(Class) || !GetWorld()) {
+		return false;
+	}
+	
+	if (m_Unit != nullptr){
+		m_Unit->DestroyObject(Player, m_Unit);
+	}
+	
+	m_Unit = GetWorld()->SpawnActor<ATileObject_Unit>(Class, GetActorLocation(), Player->GetActorRotation());
+	return true;
+}
+
+bool ATile::PlaceObjectOnTile(TSubclassOf<ATileObject_Object> Class, APawn* Player)
+{
+	if (!IsValid(Player) || !IsValid(Class) || !GetWorld()) {
+		return false;
+	}
+	
+	m_Objects.Add(GetWorld()->SpawnActor<ATileObject_Object>(Class, GetActorLocation(), Player->GetActorRotation()));
+	return true;
 }
 
 void ATile::BlueprintEditorTick(float DeltaTime)

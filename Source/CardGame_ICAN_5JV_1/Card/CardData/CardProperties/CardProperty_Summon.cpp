@@ -3,10 +3,21 @@
 
 #include "CardProperty_Summon.h"
 
-bool UCardProperty_Summon::Behvaviors(ATile* TargetTile)
+#include "CardGame_ICAN_5JV_1/GameplayElements/Tile.h"
+#include "CardGame_ICAN_5JV_1/Macro/LogMacro.h"
+
+bool UCardProperty_Summon::Behvaviors(ATile* TargetTile, APawn* CardOwner)
 {
-	// TODO : Check if the target tile is valid
-	// TODO : Check if We can summon on this Tile
-	// TODO : Summon the card on the tile
-	return Super::Behvaviors(TargetTile);
+	if (!IsValid(TargetTile) || !IsValid(CardOwner)) {
+		DEBUG_LOG_SCREEN_SIMPLE("Target Tile or PawnOwner is not valid");
+		return false;
+	}
+	
+	if (!TargetTile->CanSummonOnTile(CardOwner)) {
+		DEBUG_WARNING("%s Can't summon on the tile %s", *CardOwner->GetName(), *TargetTile->GetName());
+		return false;
+	}
+	
+	TargetTile->SummonOnTile(m_CardObjectClassToSummon, CardOwner);
+	return Super::Behvaviors(TargetTile, CardOwner);
 }

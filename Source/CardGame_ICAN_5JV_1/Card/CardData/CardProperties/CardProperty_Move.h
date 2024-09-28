@@ -17,5 +17,5 @@ class CARDGAME_ICAN_5JV_1_API UCardProperty_Move : public UCardPropertyBase
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	virtual bool Behvaviors(ATile* TargetTile) override;
+	virtual bool Behvaviors(ATile* TargetTile, APawn* CardOwner) override;
 };

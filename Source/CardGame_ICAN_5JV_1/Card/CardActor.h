@@ -23,7 +23,7 @@ protected:
 	UWidgetComponent* m_CardWidget;
 	
 	UPROPERTY(EditInstanceOnly, DisplayName = "Card Data")
-	TSoftClassPtr<UCardData_Base> m_CardData;
+	TSoftObjectPtr<UCardData_Base> m_CardData;
 
 	UPROPERTY(EditInstanceOnly, DisplayName = "Card Owner")
 	TObjectPtr<APawn> m_CardOwner;
@@ -31,5 +31,13 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public:
 	ACardActor(FObjectInitializer const& ObjectInitializer);
-	
+
+	UFUNCTION(BlueprintCallable)
+	void OnSelected();
+
+	UFUNCTION(BlueprintCallable)
+	void OnDeselected();
+
+	UFUNCTION(BlueprintCallable)
+	void OnCardPlayed();
 };

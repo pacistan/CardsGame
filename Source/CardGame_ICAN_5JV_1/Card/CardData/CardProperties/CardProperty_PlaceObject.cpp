@@ -3,7 +3,7 @@
 
 #include "CardProperty_PlaceObject.h"
 
-bool UCardProperty_PlaceObject::Behvaviors(ATile* TargetTile)
+bool UCardProperty_PlaceObject::Behvaviors(ATile* TargetTile, APawn* CardOwner)
 {
-	return Super::Behvaviors(TargetTile);
+	return Super::Behvaviors(TargetTile, CardOwner);
 }

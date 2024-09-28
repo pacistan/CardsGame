@@ -6,6 +6,7 @@
 #include "TileObjectBase.h"
 #include "TileObject_Object.generated.h"
 
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_OBJECT)
 /**
  *	Class for the Object that are Objects
  *		- Objects do not possess Movement
