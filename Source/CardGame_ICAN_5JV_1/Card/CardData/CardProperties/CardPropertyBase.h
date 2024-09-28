@@ -6,6 +6,7 @@
 #include "UObject/Object.h"
 #include "CardPropertyBase.generated.h"
 
+class UCardData_Base;
 class ATile;
 /**
  *  Base class for all card properties that can be added to a card
@@ -21,8 +22,8 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public :
 	UFUNCTION()
-	virtual bool PreviewsBehvaviors(ATile* TargetTile) { return false; }
+	virtual bool PreviewsBehvaviors(ATile* TargetTile, APawn* CardOwner) { return false; }
 	
 	UFUNCTION()
-	virtual bool Behvaviors(ATile* TargetTile) { return false;}
+	virtual bool Behvaviors(ATile* TargetTile, APawn* CardOwner) { return false;}
 };

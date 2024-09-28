@@ -6,6 +6,8 @@
 #include "TileObjectBase.h"
 #include "TileObject_Unit.generated.h"
 
+UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_UNIT);
+
 /**
  *	Class for the Object that are Units
  *		- Units possess Movement
@@ -21,6 +23,8 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public:
 	ATileObject_Unit(const FObjectInitializer& ObjectInitializer);
-
+	
 	// TODO : Function to move the unit
+	// TODO : Function for Preview Movement
+	
 };
