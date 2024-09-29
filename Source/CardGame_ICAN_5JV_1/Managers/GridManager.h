@@ -23,16 +23,16 @@ class CARDGAME_ICAN_5JV_1_API AGridManager : public AActor
 
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	int32 m_RowNum;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	int32 m_ColumnNum;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	double m_TileWidth;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	double m_TileSpacing;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation References")
