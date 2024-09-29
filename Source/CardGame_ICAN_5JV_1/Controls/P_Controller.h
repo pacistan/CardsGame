@@ -45,6 +45,8 @@ private:
 	UFUNCTION()
 	void OnReleaseCard();
 	FVector GetMouseLocationInWorld();
+
+	UFUNCTION()
 	void AddDefaultMappingContext();
 
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/

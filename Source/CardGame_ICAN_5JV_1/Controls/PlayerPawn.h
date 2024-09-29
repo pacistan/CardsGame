@@ -4,9 +4,6 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerPawn.generated.h"
 
-class UInputMappingContext;
-class UInputAction;
-
 UCLASS()
 class CARDGAME_ICAN_5JV_1_API APlayerPawn : public APawn
 {
