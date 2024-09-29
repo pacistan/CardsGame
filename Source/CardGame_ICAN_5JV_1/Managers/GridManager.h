@@ -36,7 +36,7 @@ private:
 	double m_TileSpacing;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation References")
-	TSoftObjectPtr<UBlueprint> m_TileBP;
+	TSubclassOf<ATile> m_TileBP;
 
 	UPROPERTY(Getter(GetTiles))
 	TArray<FTileArray> m_GridTiles;
@@ -71,6 +71,4 @@ protected:
 	
 public:
 	virtual void Tick(float DeltaTime) override;
-
-	friend class AGameMode_Gameplay;
 };

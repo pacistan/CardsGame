@@ -8,7 +8,7 @@ public class CardGame_ICAN_5JV_1 : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "GameplayTags", "DeveloperSettings"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "UMG", "GameplayTags", "DeveloperSettings"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
