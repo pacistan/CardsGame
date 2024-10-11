@@ -63,7 +63,7 @@ public:
 	bool CanPlaceObjectOnTile(APawn* Player) const;
 	
 	UFUNCTION(BlueprintCallable)
-	bool CanMoveOnTile(ACGTileObject_Unit* Unit, APawn* Player) const;
+	bool CanMoveOnTile(ACGTileObject_Unit* lUnit, APawn* Player) const;
 
 	UFUNCTION(BlueprintCallable)
 	bool SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, APawn* Player);
@@ -77,11 +77,11 @@ private:
 	
 protected:
 	void SetRow(const int32& row) {Row = row;};
-	void SetColumn(const int32& column) {m_Column = column;};
+	void SetColumn(const int32& column) {Column = column;};
 
 public:
-	const int32 GetRow() const {return m_Row;};
-	const int32 GetColumn() const {return m_Column;};
+	int32 GetRow() const {return Row;};
+	int32 GetColumn() const {return Column;};
 	
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 

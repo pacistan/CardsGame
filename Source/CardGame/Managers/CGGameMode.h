@@ -1,35 +1,38 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "CardGame_ICAN_5JV_1/Macro/GetSetMacro.h"
 #include "GameFramework/GameModeBase.h"
-#include "GameMode_Gameplay.generated.h"
+#include "CardGame/Macro/CGGetSetMacro.h"
+#include "CGGameMode.generated.h"
 
-class APlayerPawn;
-class UFSM_Gameplay;
+class UCGBaseState;
+class ACG_PlayerPawn;
+class UCG_FSM;
 class AGridManager;
 
 UCLASS()
-class CARDGAME_ICAN_5JV_1_API AGameMode_Gameplay : public AGameModeBase
+class CARDGAME_API ACGGameMode : public AGameModeBase
 {
 	GENERATED_UCLASS_BODY()
 
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 protected:
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
-	TObjectPtr<UFSM_Gameplay> m_FSM;
+	TObjectPtr<UCG_FSM> FSM;
 
 	UPROPERTY()
-	TArray<TObjectPtr<APlayerPawn>> m_Players;
+	TArray<TObjectPtr<ACG_PlayerPawn>> Players;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UCGBaseState> StartState;
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
-	DECLARE_GETTER(FSM, m_FSM, TObjectPtr<UFSM_Gameplay>);
-	DECLARE_GETTER(PlayerPawn, m_Players, TArray<TObjectPtr<APlayerPawn>>);
-
-	void RegisterPlayerPawn(APlayerPawn* Player);
+	DECLARE_GETTER(FSM, FSM, TObjectPtr<UCG_FSM>);
+	DECLARE_GETTER(PlayerPawn, Players, TArray<TObjectPtr<ACG_PlayerPawn>>);
+	DECLARE_GETTER(StartState, StartState, TSubclassOf<UCGBaseState>);
+	
+	void RegisterPlayerPawn(ACG_PlayerPawn* Player);
 
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 	virtual void BeginPlay() override;

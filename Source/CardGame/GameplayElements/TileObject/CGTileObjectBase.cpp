@@ -10,9 +10,9 @@ ACGTileObjectBase::ACGTileObjectBase(const FObjectInitializer& ObjectInitializer
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>( TEXT("Mesh"));
 }
 
-void ACGTileObjectBase::OnSpawned(ACGTile* TileOwner, APawn* Player)
+void ACGTileObjectBase::OnSpawned(ACGTile* lTileOwner, APawn* Player)
 {
-	TileOwner = TileOwner;
+	lTileOwner = lTileOwner;
 	PLayerOwner = Player;
 }
 

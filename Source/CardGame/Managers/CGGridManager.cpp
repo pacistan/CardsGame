@@ -4,7 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 
 
-ACGGridManager::ACGGridManager()
+ACGGridManager::ACGGridManager(): UseEditorTick(true)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	RowNum = 10;
@@ -48,7 +48,7 @@ void ACGGridManager::InitializeGrid()
 
 ACGTile* ACGGridManager::GetTile(int32 i, int32 j)
 {
-	return nullptr;
+	return GridTiles[i][j];
 }
 
 void ACGGridManager::BlueprintEditorTick(float DeltaTime)
@@ -75,21 +75,6 @@ bool ACGGridManager::ShouldTickIfViewportsOnly() const
 void ACGGridManager::BeginPlay()
 {
 	Super::BeginPlay();
-	return;
-	TArray<AActor*> tiles;
-	
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATile::StaticClass(), tiles);
-	m_GridTiles = *new TArray<FTileArray>[m_RowNum];
-	for(auto tileArray : m_GridTiles)
-	{
-		tileArray.NestedTileArray = *new TArray<TObjectPtr<ATile>>[m_ColumnNum];
-	}
-
-	for(const auto item : tiles)
-	{
-		ATile* tile = Cast<ATile>(item);
-		m_GridTiles[tile->GetRow()].NestedTileArray[tile->GetColumn()] = tile;
-	}
 }
 
 

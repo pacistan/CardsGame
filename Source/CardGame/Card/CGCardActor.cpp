@@ -16,12 +16,12 @@ ACGCardActor::ACGCardActor(FObjectInitializer const& ObjectInitializer) : Super(
 
 void ACGCardActor::OnSelected()
 {
-	TObjectPtr<UCGCardData_Base> CardData = CardData.Get();
-	if (!IsValid(CardData)) {
+	const TObjectPtr<UCGCardData_Base> lCardData = CardData.Get();
+	if (!IsValid(lCardData)) {
 		return;
 	}
 
-	TObjectPtr<UCGCardPropertyBase> CardProperty = CardData->GetCardProperty();
+	const TObjectPtr<UCGCardPropertyBase> CardProperty = lCardData->GetCardProperty();
 	if (!IsValid(CardProperty)) {
 		return;
 	}

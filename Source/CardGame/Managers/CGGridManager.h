@@ -7,15 +7,6 @@
 class ACGTile;
 class ACGGameMode;
 
-USTRUCT(BlueprintType)
-struct FTileArray
-{
-	GENERATED_BODY()
-
-	UPROPERTY()
-	TArray<TObjectPtr<ACGTile>> NestedTileArray;
-};
-
 UCLASS()
 class CARDGAME_API ACGGridManager : public AActor
 {
@@ -38,15 +29,13 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation References")
 	TSubclassOf<ACGTile> TileBP;
 
-	UPROPERTY(Getter(GetTiles))
-	TArray<FTileArray> GridTiles;
+	TArray<TArray<TObjectPtr<ACGTile>>> GridTiles;
 
 	UPROPERTY(EditDefaultsOnly, Category = "GM/GridManager")
 	bool UseEditorTick;
 
 public:
-	UFUNCTION()
-	const TArray<FTileArray>& GetTiles() const {return GridTiles;};
+	TArray<TArray<TObjectPtr<ACGTile>>> GetTiles() const {return GridTiles;};
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
@@ -71,6 +60,4 @@ protected:
 	
 public:
 	virtual void Tick(float DeltaTime) override;
-
-	friend class ACGGameMode;
 };
