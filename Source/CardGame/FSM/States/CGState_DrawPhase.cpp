@@ -24,7 +24,7 @@ void UCGState_DrawPhase::OnEnterState()
 
 void UCGState_DrawPhase::OnDrawEnd(ACG_PlayerPawn* PlayerPawn)
 {
-	if(PlayerPawn->GetHand().Num() < PlayerPawn->GetCurrentMaxNumCardToDraw())
+	if(PlayerPawn->GetCurrentHandSize() < PlayerPawn->GetCurrentMaxNumCardToDraw())
 	{
 		PlayerPawn->DrawCard(DrawEndDelegate);
 	}

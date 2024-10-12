@@ -34,7 +34,7 @@ public:
 	UCG_DeckComponent();
 
 	UFUNCTION()
-	ACGCardActor* CreateCard() ;
+	ACGCardActor* CreateCard(const FVector& SpawnLocation, const FRotator& SpawnRotation) ;
 	
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:

@@ -5,6 +5,7 @@
 #include "CardGame/Macro/CGGetSetMacro.h"
 #include "CGGameMode.generated.h"
 
+class ACG_DeckActor;
 class UCGBaseState;
 class ACG_PlayerPawn;
 class UCG_FSM;
@@ -23,6 +24,9 @@ protected:
 	UPROPERTY()
 	TArray<TObjectPtr<ACG_PlayerPawn>> Players;
 
+	UPROPERTY()
+	TArray<TObjectPtr<ACG_DeckActor>> Decks;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UCGBaseState> StartState;
 	
@@ -33,6 +37,13 @@ public:
 	DECLARE_GETTER(StartState, StartState, TSubclassOf<UCGBaseState>);
 	
 	void RegisterPlayerPawn(ACG_PlayerPawn* Player);
+
+	ACG_DeckActor* GetDeck(int PlayerIndex)
+	{
+		if(!Decks.IsEmpty() && Decks.Num() > 0)
+			return Decks[PlayerIndex];
+		return nullptr;
+	}
 
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 	virtual void BeginPlay() override;

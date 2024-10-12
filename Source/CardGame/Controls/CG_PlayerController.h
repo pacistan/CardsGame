@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "CG_PlayerController.generated.h"
 
+class ACG_PlayerPawn;
+class IHoverableInterface;
 class ACGCardActor;
 class UInputMappingContext;
 class UInputAction;
@@ -32,20 +34,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayerPawn|Input", meta=(DisplayName = "Left Click Release Action"))
 	UInputAction* IA_ReleaseCard;
 
+	IHoverableInterface* CurrentHoveredElement;
+	
+	IHoverableInterface* SelectedCard;
+
 	UPROPERTY()
-	TObjectPtr<ACGCardActor> SelectedCard;
+	TObjectPtr<ACG_PlayerPawn> PlayerPawn;
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 private:
 	UFUNCTION()
-	void OnSelectCard();
+	void OnSelectCard() const;
 
 	UFUNCTION()
 	void OnDragCard();
 
 	UFUNCTION()
 	void OnReleaseCard();
+
 	FVector GetMouseLocationInWorld() const;
+	
 	void AddDefaultMappingContext() const;
 
 public:
@@ -57,4 +65,7 @@ public:
 	virtual void BeginPlay() override;
 	
 	virtual void SetupInputComponent() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+	void OnSelectCard();
 };

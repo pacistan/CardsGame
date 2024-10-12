@@ -11,7 +11,7 @@ UCG_DeckComponent::UCG_DeckComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-ACGCardActor* UCG_DeckComponent::CreateCard()
+ACGCardActor* UCG_DeckComponent::CreateCard(const FVector& SpawnLocation, const FRotator& SpawnRotation)
 {
 	if(SelectedDeck == nullptr)
 	{
@@ -20,8 +20,6 @@ ACGCardActor* UCG_DeckComponent::CreateCard()
 	const auto CardData = SelectedDeck->GetCards().Last();
 
 	const FActorSpawnParameters SpawnParams;
-	const FVector SpawnLocation = FVector(0, 0, 0);
-	const FRotator SpawnRotation = FRotator(0, 0, 0);
 	
 	if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Unit")))
 	{

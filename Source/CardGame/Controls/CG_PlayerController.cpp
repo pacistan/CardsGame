@@ -1,5 +1,6 @@
 ﻿#include "CG_PlayerController.h"
 
+#include "CG_PlayerPawn.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "CardGame/Card/CGCardActor.h"
@@ -19,42 +20,82 @@ void ACG_PlayerController::SetupInputComponent()
 	}
 }
 
+void ACG_PlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	FHitResult HitResult;
+	GetHitResultUnderCursorByChannel(TraceTypeQuery1, true, HitResult);
+	if (HitResult.bBlockingHit)
+	{
+		if(const auto Hoverable = Cast<IHoverableInterface>(HitResult.GetActor()))
+		{
+			if(CurrentHoveredElement != Hoverable)
+			{
+				if(CurrentHoveredElement != nullptr)
+					CurrentHoveredElement->OnHoverStop(PlayerPawn);
+				CurrentHoveredElement = Hoverable;
+				CurrentHoveredElement->OnHoverStart(PlayerPawn);
+			}
+		}
+		else
+		{
+			if(CurrentHoveredElement != nullptr)
+			{
+				CurrentHoveredElement->OnHoverStop(PlayerPawn);
+				CurrentHoveredElement = nullptr;
+			}
+		}
+	}
+	else
+	{
+		if(CurrentHoveredElement != nullptr)
+		{
+			CurrentHoveredElement->OnHoverStop(PlayerPawn);
+			CurrentHoveredElement = nullptr;
+		}
+	}
+}
+
 void ACG_PlayerController::OnSelectCard()
 {
-	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Select Card"));
-	//	DEBUG_LOG_SCREEN_SIMPLE(TEXT("SelectCard"));
+	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Select Card"));
 	FHitResult HitResult;
 	GetHitResultUnderCursorByChannel(TraceTypeQuery1, true, HitResult);
 
 	if (HitResult.bBlockingHit)
 	{
-		if (ACGCardActor* HitCard = Cast<ACGCardActor>(HitResult.GetActor()))
+		if(const auto Hoverable = Cast<IHoverableInterface>(HitResult.GetActor()))
 		{
-			SelectedCard = HitCard;
-			const auto GameMode = Cast<ACGGameMode>(GetWorld()->GetAuthGameMode());
-			if(GameMode->GetFSM()->GetCurrentState().GetClass() == UCGState_MainPhase::StaticClass())
-			{
-				Cast<UCGState_MainPhase>(GameMode->GetFSM()->GetCurrentState())->OnTurnEnd();
-			}
+			Hoverable->OnSelect(PlayerPawn);
+			SelectedCard = Hoverable;
 		}
 	}
 }
 
 void ACG_PlayerController::OnDragCard()
 {
-	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Drag Card"));
-	//	DEBUG_LOG_SCREEN_SIMPLE(TEXT("DragCard"));
-	if (IsValid(SelectedCard))
+	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Drag Card"));
+	if (SelectedCard != nullptr)
 	{
-		const FVector NewLocation = GetMouseLocationInWorld();
-		SelectedCard->SetActorLocation(NewLocation);
+		float x;
+		float y;
+		GetMousePosition(x, y);
+		FVector WorldLocation, WorldDirection;
+		DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
+
+		// Calculate the target position
+		FVector TargetLocation = WorldLocation + (WorldDirection * DistanceFromCamera);
+		SelectedCard->OnDrag(PlayerPawn, TargetLocation);
 	}
 }
 
 void ACG_PlayerController::OnReleaseCard()
 {
-	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Release Card"));
-	//DEBUG_LOG_SCREEN_SIMPLE(TEXT("ReleaseCard"));
+	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Release Card"));
+	if(SelectedCard != nullptr)
+	{
+		SelectedCard->OnRelease(PlayerPawn);	
+	}
 	SelectedCard = nullptr;
 }
 
@@ -77,5 +118,7 @@ void ACG_PlayerController::AddDefaultMappingContext() const
 void ACG_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	PlayerPawn = Cast<ACG_PlayerPawn>(GetPawn());
 	AddDefaultMappingContext();
+	bShowMouseCursor = true;
 }
