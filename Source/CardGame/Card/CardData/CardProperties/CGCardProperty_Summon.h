@@ -22,5 +22,5 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	virtual bool Behvaviors(ACGTile* TargetTile, APawn* CardOwner) override;
+	virtual bool Behaviors(ACGTile* TargetTile, APawn* CardOwner) override;
 };

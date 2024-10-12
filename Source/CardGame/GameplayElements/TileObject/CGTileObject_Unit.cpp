@@ -10,4 +10,11 @@ ACGTileObject_Unit::ACGTileObject_Unit(const FObjectInitializer& ObjectInitializ
 	ObjectType = TAG_UNIT;
 }
 
+void ACGTileObject_Unit::OnSelected(APawn* player)
+{
+	Super::OnSelected(player);
+}
+
+
+
 

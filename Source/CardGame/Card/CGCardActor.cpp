@@ -118,9 +118,7 @@ void ACGCardActor::DrawAnimTickRate(const FOnDrawEnd& DrawEndDelegate, float Dur
 	SetActorRotation(newRotation);
 	SetActorScale3D(newScale);
 	
-
 	
-
 	if(InterpolationValue >= 1 )
 	{
 		SetActorLocation(EndPosition);
@@ -194,6 +192,7 @@ void ACGCardActor::OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition)
 void ACGCardActor::OnExamine(ACG_PlayerPawn* Pawn)
 {
 }
+
 
 
 

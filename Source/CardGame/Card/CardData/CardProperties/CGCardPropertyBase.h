@@ -23,8 +23,8 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public :
 	UFUNCTION()
-	virtual bool PreviewsBehvaviors(ACGTile* TargetTile, APawn* CardOwner) { return false; }
+	virtual bool PreviewsBehaviors(ACGTile* TargetTile, APawn* CardOwner) { return false; }
 	
 	UFUNCTION()
-	virtual bool Behvaviors(ACGTile* TargetTile, APawn* CardOwner) { return false;}
+	virtual bool Behaviors(ACGTile* TargetTile, APawn* CardOwner) { return false;}
 };

@@ -63,7 +63,7 @@ public:
 	bool CanPlaceObjectOnTile(APawn* Player) const;
 	
 	UFUNCTION(BlueprintCallable)
-	bool CanMoveOnTile(ACGTileObject_Unit* lUnit, APawn* Player) const;
+	bool CanMoveOnTile(ACGTileObject_Unit* lUnit, APawn* lPlayer) const;
 
 	UFUNCTION(BlueprintCallable)
 	bool SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, APawn* Player);

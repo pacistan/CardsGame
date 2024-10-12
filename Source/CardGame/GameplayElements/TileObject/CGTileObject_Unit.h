@@ -7,6 +7,7 @@
 #include "CGTileObjectBase.h"
 #include "CGTileObject_Unit.generated.h"
 
+class UCGMovementPatternBase;
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_UNIT);
 
 /**
@@ -20,12 +21,16 @@ class CARDGAME_API ACGTileObject_Unit : public ACGTileObjectBase
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 protected:
-	// TODO Patern and Range of movement
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CG|Movement")
+	TSoftClassPtr<UCGMovementPatternBase> MovementPattern; 
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public:
 	ACGTileObject_Unit(const FObjectInitializer& ObjectInitializer);
+
+	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
+
+protected:
 	
-	// TODO : Function to move the unit
-	// TODO : Function for Preview Movement
-	
+	// TODO : Function for Preview Movement 
+	virtual void OnSelected(APawn* player) override;
 };
