@@ -17,5 +17,5 @@ class CARDGAME_API UCGCardProperty_PlaceObject : public UCGCardPropertyBase
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 public:
-	virtual bool Behvaviors(ACGTile* TargetTile, APawn* CardOwner) override;
+	virtual bool Behaviors(ACGTile* TargetTile, APawn* CardOwner) override;
 };

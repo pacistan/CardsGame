@@ -4,6 +4,7 @@
 CARDGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogCard, Log, All);
 CARDGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogDebugCard, Log, All);
 
+
 // Log macros
 #define DEBUG_ERROR(Format, ...) UE_LOG(LogDebugCard, Error, TEXT(Format), ##__VA_ARGS__)
 #define DEBUG_WARNING(Format, ...) UE_LOG(LogDebugCard, Warning, TEXT(Format), ##__VA_ARGS__)

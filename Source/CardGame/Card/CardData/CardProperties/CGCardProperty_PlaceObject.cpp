@@ -3,7 +3,7 @@
 
 #include "CGCardProperty_PlaceObject.h"
 
-bool UCGCardProperty_PlaceObject::Behvaviors(ACGTile* TargetTile, APawn* CardOwner)
+bool UCGCardProperty_PlaceObject::Behaviors(ACGTile* TargetTile, APawn* CardOwner)
 {
-	return Super::Behvaviors(TargetTile, CardOwner);
+	return Super::Behaviors(TargetTile, CardOwner);
 }

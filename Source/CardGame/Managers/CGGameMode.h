@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "CardGame/Macro/CGGetSetMacro.h"
 #include "GameFramework/GameModeBase.h"
 #include "CardGame/Macro/CGGetSetMacro.h"
 #include "CGGameMode.generated.h"
@@ -20,7 +21,7 @@ class CARDGAME_API ACGGameMode : public AGameModeBase
 protected:
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	TObjectPtr<UCG_FSM> FSM;
-
+	
 	UPROPERTY()
 	TArray<TObjectPtr<ACG_PlayerPawn>> Players;
 
@@ -32,11 +33,11 @@ protected:
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
+	void RegisterPlayerPawn(ACG_PlayerPawn* Player);
+	
 	DECLARE_GETTER(FSM, FSM, TObjectPtr<UCG_FSM>);
 	DECLARE_GETTER(PlayerPawn, Players, TArray<TObjectPtr<ACG_PlayerPawn>>);
 	DECLARE_GETTER(StartState, StartState, TSubclassOf<UCGBaseState>);
-	
-	void RegisterPlayerPawn(ACG_PlayerPawn* Player);
 
 	ACG_DeckActor* GetDeck(int PlayerIndex)
 	{
