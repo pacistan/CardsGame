@@ -8,8 +8,21 @@
 #include "CGState_DrawPhase.generated.h"
 
 
+class ACG_PlayerPawn;
+DECLARE_DYNAMIC_DELEGATE_OneParam(FOnDrawEnd, ACG_PlayerPawn*, PlayerTarget);
+
 UCLASS()
 class CARDGAME_API UCGState_DrawPhase : public UCGBaseState
 {
 	GENERATED_BODY()
+
+	TArray<TObjectPtr<ACG_PlayerPawn>> Players;
+
+	FOnDrawEnd DrawEndDelegate;
+
+	virtual void Initialization(ACGGameMode* GameMode) override;
+	virtual void OnEnterState() override;
+
+	UFUNCTION()
+	void OnDrawEnd(ACG_PlayerPawn* PlayerPawn);
 };

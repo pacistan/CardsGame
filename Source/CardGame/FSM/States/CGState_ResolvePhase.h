@@ -8,4 +8,6 @@ UCLASS()
 class CARDGAME_API UCGState_ResolvePhase : public UCGBaseState
 {
 	GENERATED_BODY()
+
+	virtual void OnEnterState() override;
 };

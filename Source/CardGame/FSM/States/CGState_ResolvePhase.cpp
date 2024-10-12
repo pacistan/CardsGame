@@ -1,4 +1,7 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿#include "CGState_ResolvePhase.h"
 
-
-#include "CGState_ResolvePhase.h"
+void UCGState_ResolvePhase::OnEnterState()
+{
+	Super::OnEnterState();
+	
+}

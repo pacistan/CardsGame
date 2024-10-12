@@ -24,7 +24,7 @@ bool ACGTile::CanPlaceObjectOnTile(APawn* Player) const
 	return true;
 }
 
-bool ACGTile::CanMoveOnTile(ACGTileObject_Unit* Unit, APawn* Player) const
+bool ACGTile::CanMoveOnTile(ACGTileObject_Unit* lUnit, APawn* Player) const
 {
 	// TODO Check if the player can move on this tile
 	// - Check if this a tile that is in his base (if the player is the owner of the tile)

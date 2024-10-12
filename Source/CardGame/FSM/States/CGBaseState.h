@@ -7,16 +7,27 @@
 #include "CGBaseState.generated.h"
 
 
+class ACGGameMode;
+
 UCLASS(Abstract)
 class CARDGAME_API UCGBaseState : public UObject
 {
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
+protected:
+	TObjectPtr<ACGGameMode> GameMode; 
+	
 	/* ------------------------------------------ FUNCTIONS -----------------------------------------*/
 public:
 	UFUNCTION()
+	virtual void Initialization(ACGGameMode* GameMode);
+	
+	UFUNCTION()
 	virtual void OnEnterState();
 
+	UFUNCTION()
+	virtual void OnStateTick(float DeltaTime);
+	
 	UFUNCTION()
 	virtual void OnExitState();
 	

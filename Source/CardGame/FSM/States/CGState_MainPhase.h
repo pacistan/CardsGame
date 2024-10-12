@@ -8,4 +8,10 @@ UCLASS()
 class CARDGAME_API UCGState_MainPhase : public UCGBaseState
 {
 	GENERATED_BODY()
+
+	virtual void OnEnterState() override;
+
+public:
+	UFUNCTION()
+	void OnTurnEnd() const;
 };

@@ -1,14 +1,20 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "CGBaseState.h"
+﻿#include "CGBaseState.h"
 
 UCGBaseState* UCGBaseState::MakeStateWithClass(TSubclassOf<UCGBaseState> NewStateClass, UObject* Outer)
 {
 	return NewObject<UCGBaseState>(Outer, NewStateClass);
 }
 
+void UCGBaseState::Initialization(ACGGameMode* gameMode)
+{
+	GameMode = gameMode;
+}
+
 void UCGBaseState::OnEnterState()
+{
+}
+
+void UCGBaseState::OnStateTick(float DeltaTime)
 {
 }
 

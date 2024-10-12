@@ -40,7 +40,7 @@ public:
 
 	/* Function Call when the Object is Spawn on a Tile */
 	UFUNCTION()
-	virtual void OnSpawned(ACGTile* TileOwner, APawn* Player);
+	virtual void OnSpawned(ACGTile* lTileOwner, APawn* Player);
 
 	UFUNCTION()
 	virtual void DestroyObject(APawn* Player, ACGTileObjectBase* ObjectInstigator = nullptr);

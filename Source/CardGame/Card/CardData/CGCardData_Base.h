@@ -20,7 +20,7 @@ class CARDGAME_API UCGCardData_Base : public UDataAsset
 	// TODO : find a way to add condition of target for each cards (ex : target a tile, target a unit, target a player)
 	/* ------------------------------------------ MEMBERS ------------------------------------------- */
 protected:
-	UPROPERTY(EditAnywhere, DisplayName = "Card Name", AssetRegistrySearchable)
+		UPROPERTY(EditAnywhere, DisplayName = "Card Name", AssetRegistrySearchable)
 	FName CardName;
 
 	UPROPERTY(EditAnywhere, DisplayName = "Card Description")
@@ -48,6 +48,7 @@ protected:
 	
 	/* ------------------------------------------ METHODS ------------------------------------------- */
 public:
+
 	
 	DECLARE_GETTER(CardName,CardName, FName);
 	DECLARE_GETTER(CardDescription,CardDescription,FString);
