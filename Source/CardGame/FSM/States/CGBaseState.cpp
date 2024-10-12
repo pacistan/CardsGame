@@ -5,9 +5,9 @@ UCGBaseState* UCGBaseState::MakeStateWithClass(TSubclassOf<UCGBaseState> NewStat
 	return NewObject<UCGBaseState>(Outer, NewStateClass);
 }
 
-void UCGBaseState::Initialization(ACGGameMode* GameMode)
+void UCGBaseState::Initialization(ACGGameMode* gameMode)
 {
-	m_GameMode = GameMode;
+	GameMode = gameMode;
 }
 
 void UCGBaseState::OnEnterState()

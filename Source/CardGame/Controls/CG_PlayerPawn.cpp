@@ -3,59 +3,60 @@
 #include "CardGame/Card/Deck/CG_DeckComponent.h"
 #include "CardGame/FSM/States/CGState_DrawPhase.h"
 #include "CardGame/Managers/CGGameMode.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ACG_PlayerPawn::ACG_PlayerPawn()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	m_DeckComponent = CreateDefaultSubobject<UCG_DeckComponent>(TEXT("Deck"));
+	DeckComponent = CreateDefaultSubobject<UCG_DeckComponent>(TEXT("Deck"));
 }
 
 void ACG_PlayerPawn::DrawCard(FOnDrawEnd DrawEndDelegate)
 {
-	ACGCardActor* newCard = nullptr;
-	if(!m_DeckComponent->CreateCard(newCard) || !GetWorld())
+	if(GetWorld())
 	{
-		return;
-	}
-	else
-	{
-		Hand.Add(newCard);
-		FVector* EndPosition = new FVector(0,0,0);
-		MovementInterpolateData.ResetTimer(EndPosition);
+		const APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
+		const FVector CameraLocation = CameraManager->GetCameraLocation();
+		const FRotator CameraRotation = CameraManager->GetCameraRotation();
+		const FVector CameraRightVector = FRotationMatrix(CameraRotation).GetScaledAxis(EAxis::Y);
+		
+		auto newCard = DeckComponent->CreateCard();
+		if(newCard == nullptr) return;
+		PlayerHand.Add(newCard);
+		;
+		EndPosition = FVector(CameraLocation + (CameraRotation.Vector() * DistanceFromCamera) + CameraRightVector * CardOffset * (PlayerHand.Num())
+			- CameraRightVector * CardOffset * GetCurrentMaxNumCardToDraw() / 2.0f);
+
+		const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(CameraLocation + (CameraRotation.Vector() * DistanceFromCamera), CameraLocation);
+		PlayerHand.Last()->SetActorRotation(LookAtRotation);
+		
+		InterpolationValue = 0;
+		
 		const FTimerDelegate TimerDel = FTimerDelegate::CreateLambda([this, DrawEndDelegate]()
 		{
-				ACG_PlayerPawn::DrawAnimTickRate(DrawEndDelegate);
+			DrawAnimTickRate(DrawEndDelegate);
 		});
-		GetWorld()->GetTimerManager().SetTimer(MovementInterpolateData.TimerHandle, TimerDel, CardDrawAnimDuration, true);
+		OnDrawEndDelegate = DrawEndDelegate;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDel, CardDrawAnimRefreshRate, true);
 	}
 }
 
-void ACG_PlayerPawn::DrawAnimTickRate(FOnDrawEnd DrawEndDelegate)
+void ACG_PlayerPawn::DrawAnimTickRate(const FOnDrawEnd& DrawEndDelegate)
 {
-	const auto startPos = MovementInterpolateData.StartPosition;
-	const auto endPos = MovementInterpolateData.EndPosition;
-	MovementInterpolateData.InterpolationValue += CardDrawAnimRefreshRate / CardDrawAnimDuration;
-	MovementInterpolateData.InterpolationValue = FMath::Clamp(0, 1, MovementInterpolateData.InterpolationValue);
-	const FVector newPosition = FMath::Lerp(*startPos, *endPos, CardDrawAnimCurve->FloatCurve.Eval(MovementInterpolateData.InterpolationValue));
-	Hand.Last()->SetActorLocation(newPosition);
-	
-	if(MovementInterpolateData.InterpolationValue >= 1 )
+	if(!GetWorld() || PlayerHand.Num() == 0)
 	{
-		if(!GetWorld())
-		{
-			return;
-		}
-		Hand.Last()->SetActorLocation(*MovementInterpolateData.EndPosition);
-		GetWorld()->GetTimerManager().ClearTimer(MovementInterpolateData.TimerHandle);
-		DrawEndDelegate.ExecuteIfBound(this);
+		return;
 	}
-	else
+	const FVector newPosition = FMath::Lerp(StartPosition, EndPosition, CardDrawAnimCurve->FloatCurve.Eval(InterpolationValue));
+	PlayerHand.Last()->SetActorLocation(newPosition);
+	InterpolationValue = FMath::Clamp(InterpolationValue +  CardDrawAnimRefreshRate / CardDrawAnimDuration, 0, 1);
+
+	if(InterpolationValue >= 1 )
 	{
-		const FTimerDelegate TimerDel = FTimerDelegate::CreateLambda([this, DrawEndDelegate]()
-		{
-			ACG_PlayerPawn::DrawAnimTickRate(DrawEndDelegate);
-		});
-		GetWorld()->GetTimerManager().SetTimer(MovementInterpolateData.TimerHandle, TimerDel, CardDrawAnimDuration, true);
+		PlayerHand.Last()->SetActorLocation(EndPosition);
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		DrawEndDelegate.ExecuteIfBound(this);
 	}
 }
 
@@ -63,7 +64,6 @@ void ACG_PlayerPawn::RegisterPlayerToGameMode_Implementation()
 {
 	if (HasAuthority())
 	{
-		// We're the server, call the function directly
 		Cast<ACGGameMode>(GetWorld()->GetAuthGameMode())->RegisterPlayerPawn(this);
 	}
 }
@@ -78,15 +78,10 @@ bool ACG_PlayerPawn::RegisterPlayerToGameMode_Validate()
 void ACG_PlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	PlayerHand = *new TArray<ACGCardActor*>();
+	PlayerHand.Reserve(5);
 	CurrentMaxNumCardToDraw = DefaultMaxNumCardToDraw;
-	const FTimerHandle TimerHandle;
-	FVector StartPosition = FVector(0,0,0);
-	MovementInterpolateData = *new FMovementInterpolateData(&StartPosition, &TimerHandle);
-	if(GetWorld())
-	{
-		RegisterPlayerToGameMode();
-	}
-
+	StartPosition = FVector(GetActorLocation().X - 1000,0,0);
 }
 
 void ACG_PlayerPawn::Tick(float DeltaTime)

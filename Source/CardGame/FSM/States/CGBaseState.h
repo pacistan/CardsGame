@@ -15,7 +15,7 @@ class CARDGAME_API UCGBaseState : public UObject
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 protected:
-	TObjectPtr<ACGGameMode> m_GameMode; 
+	TObjectPtr<ACGGameMode> GameMode; 
 	
 	/* ------------------------------------------ FUNCTIONS -----------------------------------------*/
 public:

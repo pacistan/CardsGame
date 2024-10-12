@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "GC_PlayerController.generated.h"
+#include "CG_PlayerController.generated.h"
 
 class ACGCardActor;
 class UInputMappingContext;
 class UInputAction;
 
 UCLASS()
-class CARDGAME_API AGC_PlayerController : public APlayerController
+class CARDGAME_API ACG_PlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
@@ -47,6 +47,11 @@ private:
 	void OnReleaseCard();
 	FVector GetMouseLocationInWorld() const;
 	void AddDefaultMappingContext() const;
+
+public:
+	
+	UFUNCTION()
+	float GetDistanceFromCamera() const {return DistanceFromCamera;}
 
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 	virtual void BeginPlay() override;

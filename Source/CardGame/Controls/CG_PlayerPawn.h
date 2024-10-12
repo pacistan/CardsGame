@@ -1,41 +1,10 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "CardGame/FSM/States/CGState_DrawPhase.h"
 #include "CardGame/Macro/CGGetSetMacro.h"
 #include "GameFramework/Pawn.h"
 #include "CG_PlayerPawn.generated.h"
-
-USTRUCT()
-struct FMovementInterpolateData
-{
-	GENERATED_BODY()
-	
-public:
-	float InterpolationValue;
-	FVector* StartPosition;
-	FVector* EndPosition;
-	FTimerHandle TimerHandle;
-
-	FMovementInterpolateData(): StartPosition(nullptr), EndPosition(nullptr)
-	{
-		InterpolationValue = 0;
-	}
-
-	FMovementInterpolateData(FVector* startPos, const FTimerHandle* timerHandle): EndPosition(nullptr)
-	{
-		InterpolationValue = 0;
-		StartPosition = startPos;
-		TimerHandle = *timerHandle;
-	}
-
-public:
-	void ResetTimer(FVector* EndPos)
-	{
-		InterpolationValue = 0;
-		EndPosition = EndPos;
-	}
-};
-
 
 class ACGCardActor;
 class UCG_DeckComponent;
@@ -50,14 +19,14 @@ class CARDGAME_API ACG_PlayerPawn : public APawn
 	GENERATED_BODY()
 
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
-	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
-	TObjectPtr<UCG_DeckComponent> m_DeckComponent;
-
-	UPROPERTY()
-	FMovementInterpolateData MovementInterpolateData;
+	UPROPERTY(EditAnywhere)
+	float DistanceFromCamera;
 	
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
-	TSoftObjectPtr<UCurveFloat> CardDrawAnimCurve;
+	TObjectPtr<UCG_DeckComponent> DeckComponent;
+
+	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
+	TObjectPtr<UCurveFloat> CardDrawAnimCurve;
 
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	float CardDrawAnimDuration;
@@ -67,15 +36,30 @@ class CARDGAME_API ACG_PlayerPawn : public APawn
 
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	int32 DefaultMaxNumCardToDraw;
+
+	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
+	float CardOffset;
 	
 	UPROPERTY()
-	bool IsDrawingCard;
+	FTimerHandle TimerHandle;
+
+	UPROPERTY()
+	FVector StartPosition;
+	
+	UPROPERTY()
+	FVector EndPosition;
+
+	UPROPERTY()
+	float InterpolationValue;
 
 	UPROPERTY()
 	int32 CurrentMaxNumCardToDraw;
 	
 	UPROPERTY()
-	TArray<TObjectPtr<ACGCardActor>> Hand;
+	TArray<TObjectPtr<ACGCardActor>> PlayerHand;
+
+	UPROPERTY()
+	FOnDrawEnd OnDrawEndDelegate;
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 	
 public:
@@ -84,13 +68,14 @@ public:
 	UFUNCTION()
 	void DrawCard(FOnDrawEnd DrawEndDelegate);
 
-	DECLARE_GETTER(Hand, Hand, TArray<TObjectPtr<ACGCardActor>>);
-	DECLARE_GETTER_IS_BOOL(Drawing, IsDrawingCard);
 	DECLARE_GETTER(CurrentMaxNumCardToDraw, CurrentMaxNumCardToDraw, int32);
 
+	UFUNCTION()
+	TArray<ACGCardActor*> GetHand() {return PlayerHand;}
+	
 protected:
 	UFUNCTION()
-	void DrawAnimTickRate(FOnDrawEnd DrawEndDelegate);
+	void DrawAnimTickRate(const FOnDrawEnd& DrawEndDelegate);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void RegisterPlayerToGameMode();

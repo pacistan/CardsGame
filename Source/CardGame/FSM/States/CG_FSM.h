@@ -13,7 +13,7 @@ class CARDGAME_API UCG_FSM : public UObject
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleInstanceOnly)
 	TObjectPtr<UCGBaseState> CurrentState;
 
 	UPROPERTY()
@@ -24,11 +24,13 @@ public:
 	UCG_FSM();
 
 	UFUNCTION()
-	void Initialize(const ACGGameMode* GameMode);
+	void Initialize(ACGGameMode* GameMode);
 	
 	UFUNCTION(BlueprintCallable)
 	bool ChangeStateWithClass(TSubclassOf<UCGBaseState> NewStateClass);
 
+	TObjectPtr<UCGBaseState> GetCurrentState() const {return CurrentState;}
+	
 	UFUNCTION()
 	void Tick(float DeltaTime) const;
 

@@ -1,17 +1,29 @@
 ﻿#include "CGGameMode.h"
+
+#include "CardGame/Controls/CG_PlayerPawn.h"
 #include "CardGame/FSM/States/CG_FSM.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ACGGameMode::ACGGameMode(const FObjectInitializer& fObj) : Super(fObj)
 {
-	FSM = CreateDefaultSubobject<UCG_FSM>(TEXT("FSM"), false);
-	FSM->Initialize(this);
+
 }
 
 void ACGGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	Players = *new TArray<TObjectPtr<ACG_PlayerPawn>>;
+	TArray<AActor*> PlayerActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACG_PlayerPawn::StaticClass(), PlayerActors);
+
+	Players.SetNum(PlayerActors.Num());
+	for(int i = 0; i < PlayerActors.Num(); i++)
+	{
+		Players[i] = Cast<ACG_PlayerPawn>(PlayerActors[i]);
+	}
+	
+	FSM = NewObject<UCG_FSM>(this);
+	FSM->Initialize(this);
 }
 
 void ACGGameMode::RegisterPlayerPawn(ACG_PlayerPawn* Player)

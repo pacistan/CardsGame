@@ -16,11 +16,13 @@ class CARDGAME_API UCGState_DrawPhase : public UCGBaseState
 {
 	GENERATED_BODY()
 
-	TArray<TObjectPtr<ACG_PlayerPawn>> m_Players;
+	TArray<TObjectPtr<ACG_PlayerPawn>> Players;
 
-	FOnDrawEnd m_DrawEndDelegate;
+	FOnDrawEnd DrawEndDelegate;
 
 	virtual void Initialization(ACGGameMode* GameMode) override;
 	virtual void OnEnterState() override;
+
+	UFUNCTION()
 	void OnDrawEnd(ACG_PlayerPawn* PlayerPawn);
 };

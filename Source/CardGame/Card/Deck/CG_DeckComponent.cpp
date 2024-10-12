@@ -1,5 +1,6 @@
 ﻿#include "CG_DeckComponent.h"
 
+#include "CG_DeckData.h"
 #include "CardGame/Card/CGCardActor.h"
 #include "CardGame/Card/CardData/CGCardData_Base.h"
 #include "CardGame/Macro/CGLogMacro.h"
@@ -10,37 +11,38 @@ UCG_DeckComponent::UCG_DeckComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-bool UCG_DeckComponent::CreateCard(ACGCardActor* CreatedCard)
+ACGCardActor* UCG_DeckComponent::CreateCard()
 {
-	const auto CardData = Cards.Last().Get();
+	if(SelectedDeck == nullptr)
+	{
+		SelectedDeck = DefaultDeckData.Get();
+	}
+	const auto CardData = SelectedDeck->GetCards().Last();
 
 	const FActorSpawnParameters SpawnParams;
 	const FVector SpawnLocation = FVector(0, 0, 0);
 	const FRotator SpawnRotation = FRotator(0, 0, 0);
 	
-	if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("Card.Type.Unit")))
+	if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Unit")))
 	{
-		CreatedCard = GetWorld()->SpawnActor<ACGCardActor>(CardUnitPrefab, SpawnLocation, SpawnRotation, SpawnParams);
+		return GetWorld()->SpawnActor<ACGCardActor>(CardUnitPrefab, SpawnLocation, SpawnRotation, SpawnParams);
+	}
+	else if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Spell")))
+	{
+		return GetWorld()->SpawnActor<ACGCardActor>(CardSpellPrefab, SpawnLocation, SpawnRotation, SpawnParams);
 		
 	}
-	else if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("Card.Type.Spell")))
+	else if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Action")))
 	{
-		CreatedCard = GetWorld()->SpawnActor<ACGCardActor>(CardSpellPrefab, SpawnLocation, SpawnRotation, SpawnParams);
-		
-	}
-	else if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("Card.Type.Action")))
-	{
-		CreatedCard = GetWorld()->SpawnActor<ACGCardActor>(CardActionPrefab, SpawnLocation, SpawnRotation, SpawnParams);
+		return GetWorld()->SpawnActor<ACGCardActor>(CardActionPrefab, SpawnLocation, SpawnRotation, SpawnParams);
 		
 	}
 	else
 	{
 		DEBUG_ERROR("Wrong Input type for card : %s", CardData->GetCardName());
-		return false;
+		return nullptr;
 	}
-	CreatedCard->AttachToActor(GetOwner(), FAttachmentTransformRules::SnapToTargetIncludingScale);
-
-	return true;
+	//CreatedCard->AttachToActor(GetOwner(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 }
 
 

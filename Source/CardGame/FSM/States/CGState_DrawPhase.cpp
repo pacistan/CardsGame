@@ -5,40 +5,40 @@
 #include "CardGame/Macro/CGLogMacro.h"
 #include "CardGame/Managers/CGGameMode.h"
 
-void UCGState_DrawPhase::Initialization(ACGGameMode* GameMode)
+void UCGState_DrawPhase::Initialization(ACGGameMode* lGameMode)
 {
-	Super::Initialization(GameMode);
-	m_Players = m_GameMode->GetPlayerPawn();
-	m_DrawEndDelegate.BindUFunction(this, FName("OnDrawEnd"));
+	Super::Initialization(lGameMode);
+	Players = lGameMode->GetPlayerPawn();
+	DrawEndDelegate.BindDynamic(this, &UCGState_DrawPhase::OnDrawEnd);
+	//DrawEndDelegate.BindUFunction(this, FName("OnDrawEnd"));
 }
 
 void UCGState_DrawPhase::OnEnterState()
 {
 	Super::OnEnterState();
-	for(const auto player : m_Players)
+	for(const auto player : Players)
 	{
-		player->DrawCard(m_DrawEndDelegate);
+		player->DrawCard(DrawEndDelegate);
 	}
 }
 
 void UCGState_DrawPhase::OnDrawEnd(ACG_PlayerPawn* PlayerPawn)
 {
-	if(!PlayerPawn->IsDrawing() && PlayerPawn->GetHand().Num() < PlayerPawn->GetCurrentMaxNumCardToDraw())
+	if(PlayerPawn->GetHand().Num() < PlayerPawn->GetCurrentMaxNumCardToDraw())
 	{
-		PlayerPawn->DrawCard(m_DrawEndDelegate);
+		PlayerPawn->DrawCard(DrawEndDelegate);
 	}
-	else if(!PlayerPawn->IsDrawing() && PlayerPawn->GetHand().Num() >= PlayerPawn->GetCurrentMaxNumCardToDraw())
+	else
 	{
-		if(!m_Players.Contains(PlayerPawn))
+		if(!Players.Contains(PlayerPawn))
 		{
 			DEBUG_ERROR("Weird Stuff my dude");
 			return;
 		}
-		m_Players.Remove(PlayerPawn);
+		Players.Remove(PlayerPawn);
 	}
-	if(m_Players.Num() == 0)
+	if(Players.Num() == 0)
 	{
-		m_GameMode->GetFSM()->ChangeStateWithClass(UCGState_MainPhase::StaticClass());
-		return;
+		GameMode->GetFSM()->ChangeStateWithClass(UCGState_MainPhase::StaticClass());
 	}
 }

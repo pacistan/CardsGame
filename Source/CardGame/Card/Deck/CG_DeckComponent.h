@@ -15,18 +15,18 @@ class CARDGAME_API UCG_DeckComponent : public UActorComponent
 
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 	UPROPERTY(EditDefaultsOnly)
-	TSoftObjectPtr<UCG_DeckData> DefaultDeckData;
+	TObjectPtr<UCG_DeckData> DefaultDeckData;
 
 	UPROPERTY()
-	TArray<TObjectPtr<UCGCardData_Base>> Cards;
-
-	UPROPERTY()
+	TObjectPtr<UCG_DeckData> SelectedDeck;
+	
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACGCardActor> CardUnitPrefab;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACGCardActor> CardSpellPrefab;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACGCardActor> CardActionPrefab;
 
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
@@ -34,7 +34,7 @@ public:
 	UCG_DeckComponent();
 
 	UFUNCTION()
-	bool CreateCard(ACGCardActor* CreatedCard);
+	ACGCardActor* CreateCard() ;
 	
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:

@@ -1,15 +1,23 @@
 ﻿#include "CG_FSM.h"
 #include "CGBaseState.h"
 #include "CardGame/Managers/CGGameMode.h"
+#include "DSP/Delay.h"
 
 
 UCG_FSM::UCG_FSM()
 {
 }
 
-void UCG_FSM::Initialize(const ACGGameMode* GameMode)
+void UCG_FSM::Initialize(ACGGameMode* GameMode)
 {
-	ChangeStateWithClass(GameMode->GetStartState());
+	Owner = GameMode;
+	FTimerHandle TimerHandle;
+	const auto TimerDel = FTimerDelegate::CreateLambda([this, GameMode]()
+	{
+		ChangeStateWithClass(GameMode->GetStartState());
+	});
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, TimerDel, .1f, false);
+	//ChangeStateWithClass(GameMode->GetStartState());
 }
 
 
