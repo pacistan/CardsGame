@@ -5,7 +5,7 @@
 #include "CardGame/FSM/States/CGState_DrawPhase.h"
 #include "CardGame/Macro/CGGetSetMacro.h"
 #include "GameFramework/Pawn.h"
-#include "CG_PlayerPawn.generated.h"
+#include "CGPlayerPawn.generated.h"
 
 class AStaticMeshActor;
 class ACGCardActor;
@@ -17,7 +17,7 @@ class FOnDrawEnd;
 
 
 UCLASS()
-class CARDGAME_API ACG_PlayerPawn : public APawn
+class CARDGAME_API ACGPlayerPawn : public APawn
 {
 	GENERATED_BODY()
 
@@ -50,7 +50,7 @@ class CARDGAME_API ACG_PlayerPawn : public APawn
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 	
 public:
-	ACG_PlayerPawn();
+	ACGPlayerPawn();
 
 	UFUNCTION()
 	void DrawCard(const FOnDrawEnd& DrawEndDelegate);

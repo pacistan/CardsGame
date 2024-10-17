@@ -1,6 +1,6 @@
 ﻿#include "CG_PlayerController.h"
 
-#include "CG_PlayerPawn.h"
+#include "CGPlayerPawn.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "CardGame/Card/CGCardActor.h"
@@ -118,7 +118,7 @@ void ACG_PlayerController::AddDefaultMappingContext() const
 void ACG_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	PlayerPawn = Cast<ACG_PlayerPawn>(GetPawn());
+	PlayerPawn = Cast<ACGPlayerPawn>(GetPawn());
 	AddDefaultMappingContext();
 	bShowMouseCursor = true;
 }

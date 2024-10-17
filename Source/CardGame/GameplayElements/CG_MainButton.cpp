@@ -17,28 +17,28 @@ void ACG_MainButton::BeginPlay()
 	
 }
 
-void ACG_MainButton::OnHoverStart(ACG_PlayerPawn* Pawn)
+void ACG_MainButton::OnHoverStart(ACGPlayerPawn* Pawn)
 {
 }
 
-void ACG_MainButton::OnHoverStop(ACG_PlayerPawn* Pawn)
+void ACG_MainButton::OnHoverStop(ACGPlayerPawn* Pawn)
 {
 }
 
-void ACG_MainButton::OnSelect(ACG_PlayerPawn* Pawn)
+void ACG_MainButton::OnSelect(ACGPlayerPawn* Pawn)
 {
 	Pawn->PlayCard();
 }
 
-void ACG_MainButton::OnRelease(ACG_PlayerPawn* Pawn)
+void ACG_MainButton::OnRelease(ACGPlayerPawn* Pawn)
 {
 }
 
-void ACG_MainButton::OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition)
+void ACG_MainButton::OnDrag(ACGPlayerPawn* Pawn, FVector MousePosition)
 {
 }
 
-void ACG_MainButton::OnExamine(ACG_PlayerPawn* Pawn)
+void ACG_MainButton::OnExamine(ACGPlayerPawn* Pawn)
 {
 }
 

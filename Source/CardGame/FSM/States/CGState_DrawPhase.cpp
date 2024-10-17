@@ -22,7 +22,7 @@ void UCGState_DrawPhase::OnEnterState()
 	}
 }
 
-void UCGState_DrawPhase::OnDrawEnd(ACG_PlayerPawn* PlayerPawn)
+void UCGState_DrawPhase::OnDrawEnd(ACGPlayerPawn* PlayerPawn)
 {
 	if(PlayerPawn->GetCurrentHandSize() < PlayerPawn->GetCurrentMaxNumCardToDraw())
 	{

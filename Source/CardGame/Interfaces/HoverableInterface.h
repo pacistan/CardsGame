@@ -5,7 +5,7 @@
 #include "HoverableInterface.generated.h"
 
 
-class ACG_PlayerPawn;
+class ACGPlayerPawn;
 
 UINTERFACE()
 class UHoverableInterface : public UInterface
@@ -19,15 +19,15 @@ class CARDGAME_API IHoverableInterface
 	GENERATED_BODY()
 
 public:
-	virtual void OnHoverStart(ACG_PlayerPawn* Pawn) = 0;
+	virtual void OnHoverStart(ACGPlayerPawn* Pawn) = 0;
 
-	virtual void OnHoverStop(ACG_PlayerPawn* Pawn) = 0;
+	virtual void OnHoverStop(ACGPlayerPawn* Pawn) = 0;
 	
-	virtual void OnSelect(ACG_PlayerPawn* Pawn) = 0;
+	virtual void OnSelect(ACGPlayerPawn* Pawn) = 0;
 	
-	virtual void OnExamine(ACG_PlayerPawn* Pawn) = 0;
+	virtual void OnExamine(ACGPlayerPawn* Pawn) = 0;
 
-	virtual void OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition) = 0;
+	virtual void OnDrag(ACGPlayerPawn* Pawn, FVector MousePosition) = 0;
 	
-	virtual void OnRelease(ACG_PlayerPawn* Pawn) = 0;
+	virtual void OnRelease(ACGPlayerPawn* Pawn) = 0;
 };

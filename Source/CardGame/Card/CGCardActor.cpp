@@ -28,7 +28,7 @@ void ACGCardActor::OnUnselect()
 	InitiateMovement(true);
 }
 
-void ACGCardActor::InitiateMovement(bool IsHoveringOperation, ACG_PlayerPawn* PawnOwner, const FOnDrawEnd& DrawEndDelegate)
+void ACGCardActor::InitiateMovement(bool IsHoveringOperation, ACGPlayerPawn* PawnOwner, const FOnDrawEnd& DrawEndDelegate)
 {
 	if(PawnOwner != nullptr)
 		CardOwner = PawnOwner;
@@ -135,7 +135,7 @@ void ACGCardActor::BeginPlay()
 	BaseScale = GetActorScale();
 }
 
-void ACGCardActor::OnHoverStart(ACG_PlayerPawn* Pawn)
+void ACGCardActor::OnHoverStart(ACGPlayerPawn* Pawn)
 {
 	if(CurrentCardState == ECardState::INACTIVE)
 	{
@@ -144,7 +144,7 @@ void ACGCardActor::OnHoverStart(ACG_PlayerPawn* Pawn)
 	}
 }
 
-void ACGCardActor::OnHoverStop(ACG_PlayerPawn* Pawn)
+void ACGCardActor::OnHoverStop(ACGPlayerPawn* Pawn)
 {
 	if(CurrentCardState == ECardState::HOVERED)
 	{
@@ -153,7 +153,7 @@ void ACGCardActor::OnHoverStop(ACG_PlayerPawn* Pawn)
 	}
 }
 
-void ACGCardActor::OnSelect(ACG_PlayerPawn* Pawn)
+void ACGCardActor::OnSelect(ACGPlayerPawn* Pawn)
 {
 	if(CurrentCardState == ECardState::HOVERED)
 	{
@@ -168,7 +168,7 @@ void ACGCardActor::OnSelect(ACG_PlayerPawn* Pawn)
 	}
 }
 
-void ACGCardActor::OnRelease(ACG_PlayerPawn* Pawn)
+void ACGCardActor::OnRelease(ACGPlayerPawn* Pawn)
 {
 	//UE_LOG(LogTemp, Warning, TEXT("%f"), FVector::Distance(GetActorLocation(), AnchorPosition))
 	//if(FVector::Distance(GetActorLocation(), AnchorPosition) > 1000)
@@ -184,12 +184,12 @@ void ACGCardActor::OnRelease(ACG_PlayerPawn* Pawn)
 	//}
 }
 
-void ACGCardActor::OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition)
+void ACGCardActor::OnDrag(ACGPlayerPawn* Pawn, FVector MousePosition)
 {
 	//SetActorLocation( MousePosition);
 }
 
-void ACGCardActor::OnExamine(ACG_PlayerPawn* Pawn)
+void ACGCardActor::OnExamine(ACGPlayerPawn* Pawn)
 {
 }
 

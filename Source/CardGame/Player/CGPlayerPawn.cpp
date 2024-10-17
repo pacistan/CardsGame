@@ -1,4 +1,4 @@
-﻿#include "CG_PlayerPawn.h"
+﻿#include "CGPlayerPawn.h"
 #include "CardGame/Card/CGCardActor.h"
 #include "CardGame/Card/Deck/CG_DeckActor.h"
 #include "CardGame/Card/Deck/CG_DeckComponent.h"
@@ -8,13 +8,13 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
-ACG_PlayerPawn::ACG_PlayerPawn()
+ACGPlayerPawn::ACGPlayerPawn()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	DeckComponent = CreateDefaultSubobject<UCG_DeckComponent>(TEXT("Deck"));
 }
 
-void ACG_PlayerPawn::DrawCard(const FOnDrawEnd& DrawEndDelegate)
+void ACGPlayerPawn::DrawCard(const FOnDrawEnd& DrawEndDelegate)
 {
 	if(GetWorld())
 	{
@@ -33,7 +33,7 @@ void ACG_PlayerPawn::DrawCard(const FOnDrawEnd& DrawEndDelegate)
 	}
 }
 
-void ACG_PlayerPawn::RegisterPlayerToGameMode_Implementation()
+void ACGPlayerPawn::RegisterPlayerToGameMode_Implementation()
 {
 	if (HasAuthority())
 	{
@@ -41,12 +41,12 @@ void ACG_PlayerPawn::RegisterPlayerToGameMode_Implementation()
 	}
 }
 
-bool ACG_PlayerPawn::RegisterPlayerToGameMode_Validate()
+bool ACGPlayerPawn::RegisterPlayerToGameMode_Validate()
 {
 	return true;
 }
 
-void ACG_PlayerPawn::BeginPlay()
+void ACGPlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	PlayerHand = *new TArray<ACGCardActor*>();
@@ -57,7 +57,7 @@ void ACG_PlayerPawn::BeginPlay()
 	PlayedCardIndexs.Reserve(5);
 }
 
-void ACG_PlayerPawn::Tick(float DeltaTime)
+void ACGPlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

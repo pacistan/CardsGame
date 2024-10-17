@@ -8,7 +8,7 @@
 #include "GameFramework/Actor.h"
 #include "CGCardActor.generated.h"
 
-class ACG_PlayerPawn;
+class ACGPlayerPawn;
 class UWidgetComponent;
 class UStaticMeshComponent;
 class UCGCardData_Base;
@@ -40,7 +40,7 @@ protected:
 	TSoftObjectPtr<UCGCardData_Base> CardData;
 
 	UPROPERTY(EditInstanceOnly, DisplayName = "Card Owner")
-	TObjectPtr<ACG_PlayerPawn> CardOwner;
+	TObjectPtr<ACGPlayerPawn> CardOwner;
 	
 	UPROPERTY(EditAnywhere, Category="CardActor|CardMovement", meta=(AllowPrivateAccess))
 	TObjectPtr<UCurveFloat> CardDrawAnimCurve;
@@ -131,7 +131,7 @@ public:
 	void OnUnselect();
 
 	UFUNCTION()
-	void InitiateMovement(bool IsHoveringOperation = false, ACG_PlayerPawn* PawnOwner = nullptr, const FOnDrawEnd& DrawEndDelegate = FOnDrawEnd());
+	void InitiateMovement(bool IsHoveringOperation = false, ACGPlayerPawn* PawnOwner = nullptr, const FOnDrawEnd& DrawEndDelegate = FOnDrawEnd());
 
 	UFUNCTION()
 	void RemoveCardFromPlayArray();
@@ -145,15 +145,15 @@ protected:
 	
 	/* ------------------------------------------ INTERFACE -------------------------------------------*/
 	
-	virtual void OnHoverStart(ACG_PlayerPawn* Pawn) override;
+	virtual void OnHoverStart(ACGPlayerPawn* Pawn) override;
 	
-	virtual void OnHoverStop(ACG_PlayerPawn* Pawn) override;
+	virtual void OnHoverStop(ACGPlayerPawn* Pawn) override;
 	
-	virtual void OnSelect(ACG_PlayerPawn* Pawn) override;
+	virtual void OnSelect(ACGPlayerPawn* Pawn) override;
 	
-	virtual void OnRelease(ACG_PlayerPawn* Pawn) override;
+	virtual void OnRelease(ACGPlayerPawn* Pawn) override;
 	
-	virtual void OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition) override;
+	virtual void OnDrag(ACGPlayerPawn* Pawn, FVector MousePosition) override;
 	
-	virtual void OnExamine(ACG_PlayerPawn* Pawn) override;
+	virtual void OnExamine(ACGPlayerPawn* Pawn) override;
 };

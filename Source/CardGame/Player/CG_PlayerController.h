@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "CG_PlayerController.generated.h"
 
-class ACG_PlayerPawn;
+class ACGPlayerPawn;
 class IHoverableInterface;
 class ACGCardActor;
 class UInputMappingContext;
@@ -39,7 +39,7 @@ public:
 	IHoverableInterface* SelectedCard;
 
 	UPROPERTY()
-	TObjectPtr<ACG_PlayerPawn> PlayerPawn;
+	TObjectPtr<ACGPlayerPawn> PlayerPawn;
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 private:

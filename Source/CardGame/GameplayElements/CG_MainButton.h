@@ -20,15 +20,15 @@ protected:
 
 public:
 
-	virtual void OnHoverStart(ACG_PlayerPawn* Pawn) override;
+	virtual void OnHoverStart(ACGPlayerPawn* Pawn) override;
 
-	virtual void OnHoverStop(ACG_PlayerPawn* Pawn) override;
+	virtual void OnHoverStop(ACGPlayerPawn* Pawn) override;
 
-	virtual void OnSelect(ACG_PlayerPawn* Pawn) override;
+	virtual void OnSelect(ACGPlayerPawn* Pawn) override;
 
-	virtual void OnRelease(ACG_PlayerPawn* Pawn) override;
+	virtual void OnRelease(ACGPlayerPawn* Pawn) override;
 
-	virtual void OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition) override;
+	virtual void OnDrag(ACGPlayerPawn* Pawn, FVector MousePosition) override;
 
-	virtual void OnExamine(ACG_PlayerPawn* Pawn) override;
+	virtual void OnExamine(ACGPlayerPawn* Pawn) override;
 };
