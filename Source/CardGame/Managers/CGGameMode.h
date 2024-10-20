@@ -6,6 +6,7 @@
 #include "CardGame/Macro/CGGetSetMacro.h"
 #include "CGGameMode.generated.h"
 
+class ACGPlayerStart;
 class ACGPlayerSpawn;
 class ACG_PlayerController;
 class ACG_DeckActor;
@@ -39,6 +40,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UCGBaseState> StartState;
 
+	UPROPERTY(Transient)
+	TArray<TWeakObjectPtr<ACGPlayerStart>> CachedPlayerStarts;
+	
+public:
+	// Delegate called on player initialization
+	FOnCGGameModePlayerInitialized OnGameModePlayerInitialized;
+	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 protected:
 
@@ -47,14 +55,11 @@ public:
 	
 	void RegisterPlayerPawn(ACGPlayerPawn* Player);
 
-	// Delegate called on player initialization
-	FOnCGGameModePlayerInitialized OnGameModePlayerInitialized;
-
 	// Restart (respawn) the specified player or bot next frame
 	// - If bForceReset is true, the controller will be reset this frame (abandoning the currently possessed pawn, if any)
 	UFUNCTION(BlueprintCallable)
 	void RequestPlayerRestartNextFrame(AController* Controller, bool bForceReset = false);
-	
+
 #if WITH_EDITOR
 	APlayerStart* FindPlayFromHereStart(AController* Player);
 #endif

@@ -111,19 +111,28 @@ AActor* ACGGameMode::ChoosePlayerStart_Implementation(AController* Player)
 		}
 #endif
 		TArray<ACGPlayerStart*> StarterPoints;
-		for (auto StartIt = CachedPlayerStarts.CreateIterator(); StartIt; ++StartIt)
-		{
-			if (ALyraPlayerStart* Start = (*StartIt).Get())
-			{
+		for (auto StartIt = CachedPlayerStarts.CreateIterator(); StartIt; ++StartIt) {
+			if (ACGPlayerStart* Start = (*StartIt).Get()) {
 				StarterPoints.Add(Start);
-			}
-			else
-			{
+			} else {
 				StartIt.RemoveCurrent();
 			}
 		}
+
+		AActor* PlayerStart = OnChoosePlayerStart(Player, StarterPoints);
+		
+		if (!PlayerStart)
+		{
+			PlayerStart = GetFirstRandomUnoccupiedPlayerStart(Player, StarterPoints);
+		}
+
+		if (ALyraPlayerStart* LyraStart = Cast<ALyraPlayerStart>(PlayerStart))
+		{
+			LyraStart->TryClaim(Player);
+		}
+
+		return PlayerStart;
 	}
-	
 	return Super::ChoosePlayerStart_Implementation(Player);
 }
 
