@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -24,8 +22,8 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public :
 	UFUNCTION()
-	virtual bool PreviewsBehvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) { return false; }
-	
+	virtual bool PreviewsBehaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) { return false; }
+
 	UFUNCTION()
-	virtual bool Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) { return false;}
+	virtual bool Behaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) { return false;}
 };

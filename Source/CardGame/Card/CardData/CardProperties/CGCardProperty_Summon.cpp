@@ -1,12 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "CGCardProperty_Summon.h"
 
 #include "CardGame/GameplayElements/CGTile.h"
 #include "CardGame/Macro/CGLogMacro.h"
 
-bool UCGCardProperty_Summon::Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner)
+bool UCGCardProperty_Summon::Behaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner)
 {
 	if (!IsValid(TargetTile) || !IsValid(CardOwner)) {
 		DEBUG_LOG_SCREEN_SIMPLE("Target Tile or PawnOwner is not valid");
@@ -19,5 +16,5 @@ bool UCGCardProperty_Summon::Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* Car
 	}
 	
 	TargetTile->SummonOnTile(CardObjectClassToSummon, CardOwner);
-	return Super::Behvaviors(TargetTile, CardOwner);
+	return Super::Behaviors(TargetTile, CardOwner);
 }

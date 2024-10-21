@@ -1,14 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "CGCardPropertyBase.h"
 #include "CGCardProperty_Move.generated.h"
 
-/**
- * 
- */
 UCLASS(DisplayName = "Move")
 class CARDGAME_API UCGCardProperty_Move : public UCGCardPropertyBase
 {

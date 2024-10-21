@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -23,5 +21,5 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	virtual bool Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) override;
+	virtual bool Behaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) override;
 };

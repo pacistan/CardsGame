@@ -17,7 +17,14 @@ class UCGCardData_Base;
 
 
 UENUM()
-enum class ECardState : int32 { INACTIVE,  HOVERED, SELECTED, PLAYED, ISEXAMINED };
+enum class ECardState : uint8
+{
+	INACTIVE,
+	HOVERED,
+	SELECTED,
+	PLAYED,
+	ISEXAMINED
+};
 
 UCLASS()
 class CARDGAME_API ACGCardActor : public AActor, public IHoverable, public ISelectable, public IExaminable
@@ -139,12 +146,13 @@ protected:
 	virtual void BeginPlay() override;
 	
 	/* ------------------------------------------ INTERFACE -------------------------------------------*/
+	
 	virtual void OnHoverStart(ACG_PlayerPawn* Pawn) override;
-
+	
 	virtual void OnHoverStop(ACG_PlayerPawn* Pawn) override;
-
+	
 	virtual void OnSelect(ACG_PlayerPawn* Pawn) override;
-
+	
 	virtual void OnRelease(ACG_PlayerPawn* Pawn) override;
 
 	virtual void OnExamine(ACG_PlayerPawn* Pawn) override;

@@ -7,7 +7,6 @@
 
 ACGGameMode::ACGGameMode(const FObjectInitializer& fObj) : Super(fObj)
 {
-
 }
 
 void ACGGameMode::BeginPlay()
