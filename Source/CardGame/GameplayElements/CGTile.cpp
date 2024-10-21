@@ -1,5 +1,6 @@
 ﻿#include "CGTile.h"
 
+#include "CardGame/Controls/CG_PlayerPawn.h"
 #include "TileObject/CGTileObject_SpellItem.h"
 #include "TileObject/CGTileObject_Unit.h"
 
@@ -9,22 +10,40 @@ ACGTile::ACGTile()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-bool ACGTile::CanSummonOnTile(APawn* Player) const
+bool ACGTile::CanSummonOnTile(ACG_PlayerPawn* Player) const
 {
 	// TODO Check if the player can summon on this tile
 	// - Check if this a tile that is in his base  (if the player is the owner of the tile)
 	return true;
 }
 
-bool ACGTile::CanPlaceObjectOnTile(APawn* Player) const
+bool ACGTile::CanPlaceObjectOnTile(ACG_PlayerPawn* Player) const
 {
-	// TODO Check if the player can place an object on this tile
-	// - Check if this a tile that is in his base  (if the player is the owner of the tile)
-	// - Or if the tile is in the middle of the map
-	return true;
+	switch(TileType)
+	{
+	case ETileType::Player1:
+		if(Player->GetPlayerMultIndex() == 1)
+			return true;
+		break;
+	case ETileType::Player2:
+		if(Player->GetPlayerMultIndex() == 2)
+			return true;
+		break;
+	case ETileType::Player3:
+		if(Player->GetPlayerMultIndex() == 3)
+			return true;
+		break;
+	case ETileType::Player4:
+		if(Player->GetPlayerMultIndex() == 4)
+			return true;
+		break;
+	default:
+		return false;
+	}
+	return false;
 }
 
-bool ACGTile::CanMoveOnTile(ACGTileObject_Unit* lUnit, APawn* Player) const
+bool ACGTile::CanMoveOnTile(ACGTileObject_Unit* lUnit, ACG_PlayerPawn* Player) const
 {
 	// TODO Check if the player can move on this tile
 	// - Check if this a tile that is in his base (if the player is the owner of the tile)
@@ -32,7 +51,7 @@ bool ACGTile::CanMoveOnTile(ACGTileObject_Unit* lUnit, APawn* Player) const
 	return true;
 }
 
-bool ACGTile::SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, APawn* Player)
+bool ACGTile::SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, ACG_PlayerPawn* Player)
 {
 	if (!IsValid(Player) || !IsValid(Class) || !GetWorld()) {
 		return false;
@@ -46,7 +65,7 @@ bool ACGTile::SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, APawn* Player)
 	return true;
 }
 
-bool ACGTile::PlaceObjectOnTile(TSubclassOf<ACGTileObject_SpellItem> Class, APawn* Player)
+bool ACGTile::PlaceObjectOnTile(TSubclassOf<ACGTileObject_SpellItem> Class, ACG_PlayerPawn* Player)
 {
 	if (!IsValid(Player) || !IsValid(Class) || !GetWorld()) {
 		return false;
@@ -58,7 +77,13 @@ bool ACGTile::PlaceObjectOnTile(TSubclassOf<ACGTileObject_SpellItem> Class, APaw
 
 void ACGTile::BlueprintEditorTick(float DeltaTime)
 {
-	if(IsActive != IsActiveChecker)
+	UpdateMaterial();
+}
+
+void ACGTile::UpdateMaterial()
+{
+		
+	if(TileType != PreviousTileType)
 	{
 		MeshComponent = FindComponentByClass<UStaticMeshComponent>();
 		if (MeshComponent == nullptr)
@@ -66,24 +91,47 @@ void ACGTile::BlueprintEditorTick(float DeltaTime)
 			UE_LOG(LogTemp, Warning, TEXT("No StaticMeshComponent found on %s"), *GetName());
 			return;
 		}
-		if(IsActive)
+		switch(TileType)
 		{
-			SetActorHiddenInGame(false);
-			MeshComponent->SetMaterial(0, ActiveMaterial.Get());
-		}
-		else
-		{
+		case ETileType::Disabled:
 			SetActorHiddenInGame(true);
 			MeshComponent->SetMaterial(0, InactiveMaterial.Get());
+			break;
+		case ETileType::Normal:
+			SetActorHiddenInGame(false);
+			MeshComponent->SetMaterial(0, ActiveMaterial.Get());
+			break;
+		case ETileType::Player1:
+			SetActorHiddenInGame(false);
+			MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+			break;
+		case ETileType::Player2:
+			SetActorHiddenInGame(false);
+			MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+			break;
+		case ETileType::Player3:
+			SetActorHiddenInGame(false);
+			MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+			break;
+		case ETileType::Player4:
+			SetActorHiddenInGame(false);
+			MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+			break;
 		}
+		PreviousTileType = TileType;
 	}
-	IsActiveChecker = IsActive;
-	
+}
+
+void ACGTile::SetHighlighted()
+{
+	IsHighlighted = true;
+	MeshComponent->SetMaterial(0, HighlightMaterial.Get());
 }
 
 void ACGTile::BeginPlay()
 {
 	Super::BeginPlay();
+	UpdateMaterial();
 }
 
 bool ACGTile::ShouldTickIfViewportsOnly() const
@@ -104,5 +152,52 @@ void ACGTile::Tick(float DeltaTime)
 		BlueprintEditorTick(DeltaTime);
 	}
 #endif
+	UpdateMaterial();
+}
+
+void ACGTile::OnHoverStart(ACG_PlayerPawn* Pawn)
+{
+	if(IsHighlighted)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("HOVER TILE"));
+		IsHovered = true;
+		MeshComponent->SetMaterial(0, HoveredMaterial.Get());
+	}
+}
+
+void ACGTile::OnHoverStop(ACG_PlayerPawn* Pawn)
+{
+	if(IsHovered)
+	{
+		IsHovered = false;
+		if(IsHighlighted)
+		{
+			MeshComponent->SetMaterial(0, HighlightMaterial.Get());
+		}
+		else
+		{
+			switch(TileType)
+			{
+				case ETileType::Disabled:
+					MeshComponent->SetMaterial(0, InactiveMaterial.Get());
+					break;
+				case ETileType::Normal:
+					MeshComponent->SetMaterial(0, ActiveMaterial.Get());
+					break;
+				case ETileType::Player1:
+					MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+					break;
+				case ETileType::Player2:
+					MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+					break;
+				case ETileType::Player3:
+					MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+					break;
+				case ETileType::Player4:
+					MeshComponent->SetMaterial(0, PlayerMaterial.Get());
+					break;
+			}
+		}
+	}
 }
 

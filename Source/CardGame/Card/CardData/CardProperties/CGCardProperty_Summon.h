@@ -6,6 +6,7 @@
 #include "CGCardPropertyBase.h"
 #include "CGCardProperty_Summon.generated.h"
 
+class ACG_PlayerPawn;
 class ACGTileObject_Unit;
 
 /**
@@ -22,5 +23,5 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	virtual bool Behvaviors(ACGTile* TargetTile, APawn* CardOwner) override;
+	virtual bool Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) override;
 };

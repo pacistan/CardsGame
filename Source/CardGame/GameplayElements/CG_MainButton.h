@@ -3,12 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CardGame/Interfaces/HoverableInterface.h"
+#include "CardGame/Interfaces/Clickable.h"
+#include "CardGame/Interfaces/Hoverable.h"
 #include "GameFramework/Actor.h"
 #include "CG_MainButton.generated.h"
 
 UCLASS()
-class CARDGAME_API ACG_MainButton : public AActor, public IHoverableInterface
+class CARDGAME_API ACG_MainButton : public AActor, public IClickable
 {
 	GENERATED_BODY()
 
@@ -20,15 +21,5 @@ protected:
 
 public:
 
-	virtual void OnHoverStart(ACG_PlayerPawn* Pawn) override;
-
-	virtual void OnHoverStop(ACG_PlayerPawn* Pawn) override;
-
-	virtual void OnSelect(ACG_PlayerPawn* Pawn) override;
-
-	virtual void OnRelease(ACG_PlayerPawn* Pawn) override;
-
-	virtual void OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition) override;
-
-	virtual void OnExamine(ACG_PlayerPawn* Pawn) override;
+	virtual void OnClick(ACG_PlayerPawn* Pawn) override;
 };

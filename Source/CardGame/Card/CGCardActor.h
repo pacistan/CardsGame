@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "CardGame/FSM/States/CGState_DrawPhase.h"
-#include "CardGame/Interfaces/HoverableInterface.h"
+#include "CardGame/Interfaces/Examinable.h"
+#include "CardGame/Interfaces/Hoverable.h"
+#include "CardGame/Interfaces/Selectable.h"
 #include "GameFramework/Actor.h"
 #include "CGCardActor.generated.h"
 
@@ -18,7 +20,7 @@ UENUM()
 enum class ECardState : int32 { INACTIVE,  HOVERED, SELECTED, PLAYED, ISEXAMINED };
 
 UCLASS()
-class CARDGAME_API ACGCardActor : public AActor, public IHoverableInterface
+class CARDGAME_API ACGCardActor : public AActor, public IHoverable, public ISelectable, public IExaminable
 {
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
@@ -144,8 +146,6 @@ protected:
 	virtual void OnSelect(ACG_PlayerPawn* Pawn) override;
 
 	virtual void OnRelease(ACG_PlayerPawn* Pawn) override;
-
-	virtual void OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition) override;
 
 	virtual void OnExamine(ACG_PlayerPawn* Pawn) override;
 };

@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "CGGridManager.generated.h"
 
+enum class ETileType : uint32;
 class ACGTile;
 class ACGGameMode;
 
@@ -14,26 +15,34 @@ class CARDGAME_API ACGGridManager : public AActor
 
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	int32 RowNum;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	int32 ColumnNum;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	double TileWidth;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation Parameters")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation Parameters")
 	double TileSpacing;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "GM/Grid Generation References")
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Generation References")
 	TSubclassOf<ACGTile> TileBP;
 
 	TArray<TArray<TObjectPtr<ACGTile>>> GridTiles;
 
-	UPROPERTY(EditDefaultsOnly, Category = "GM/GridManager")
+	UPROPERTY(EditAnywhere, Category = "GM/GridManager")
 	bool UseEditorTick;
 
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Saving")
+	FString FileName;
+
+	UPROPERTY(EditAnywhere, Category = "GM/Grid Saving")
+	TArray<FString> ListOfLoadableGridFiles;
+
+	TMap<ETileType, TArray<UE::Geometry::FIndex2i>> TileTypeMap;
+	
 public:
 	TArray<TArray<TObjectPtr<ACGTile>>> GetTiles() const {return GridTiles;};
 	
@@ -41,14 +50,30 @@ public:
 public:
 	ACGGridManager();
 
-	UFUNCTION(CallInEditor, Category = "GM/GridManager")
-	void InitializeGrid();
+	UFUNCTION(CallInEditor, Category = "CG|Events")
+	void InitializeEmptyGrid(){InitializeGrid(TArray<ACGTile*>());};
+
+	UFUNCTION()
+	void HighlightTiles(ETileType TileType);
+	
+	UFUNCTION()
+	void InitializeGrid(TArray<ACGTile*> FileTileArray);
 
 	UFUNCTION()
 	ACGTile* GetTile(int32 i, int32 j);
 
-	UFUNCTION(CallInEditor, Category = "Events")
+	UFUNCTION(CallInEditor, Category = "CG|Events")
 	void BlueprintEditorTick(float DeltaTime);
+
+	UFUNCTION(CallInEditor, Category = "CG|Events")
+	void LoadTileArrayFromFile();
+	void LoadRandomTileArrayFromFile();
+
+	UFUNCTION(CallInEditor, Category = "CG|Events")
+	void SaveTileArrayToFile();
+
+	void SaveTileArray(FArchive& Ar, TArray<ACGTile*>& ClassArray);
+	void LoadTileArray(FArchive& Ar, TArray<ACGTile*>& ClassArray);
 	
 private:
 	

@@ -46,6 +46,25 @@ bool ACG_PlayerPawn::RegisterPlayerToGameMode_Validate()
 	return true;
 }
 
+void ACG_PlayerPawn::PlayCard()
+{
+	if(SelectedCardIndex >= 0 && SelectedCardIndex < PlayerHand.Num())
+	{
+		PlayerHand[SelectedCardIndex]->OnCardPlayed();
+		PlayedCardIndexs.Add(SelectedCardIndex);
+		SelectedCardIndex = -1;
+	}
+}
+
+void ACG_PlayerPawn::SelectCard(ACGCardActor* Card)
+{
+	if(SelectedCardIndex >= 0 && SelectedCardIndex < PlayerHand.Num())
+	{
+		PlayerHand[SelectedCardIndex]->OnUnselect();
+	}
+	SelectedCardIndex = GetCardIndex(Card);
+}
+
 void ACG_PlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();

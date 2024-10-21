@@ -6,6 +6,9 @@
 #include "CardGame/Card/CGCardActor.h"
 #include "CardGame/FSM/States/CGState_MainPhase.h"
 #include "CardGame/FSM/States/CG_FSM.h"
+#include "CardGame/Interfaces/Clickable.h"
+#include "CardGame/Interfaces/Draggable.h"
+#include "CardGame/Interfaces/Selectable.h"
 #include "CardGame/Managers/CGGameMode.h"
 
 void ACG_PlayerController::SetupInputComponent()
@@ -27,21 +30,21 @@ void ACG_PlayerController::Tick(float DeltaSeconds)
 	GetHitResultUnderCursorByChannel(TraceTypeQuery1, true, HitResult);
 	if (HitResult.bBlockingHit)
 	{
-		if(const auto Hoverable = Cast<IHoverableInterface>(HitResult.GetActor()))
+		if(const auto Hoverable = Cast<IHoverable>(HitResult.GetActor()))
 		{
-			if(CurrentHoveredElement != Hoverable)
+			if(CurrentHoveredElement != HitResult.GetActor())
 			{
 				if(CurrentHoveredElement != nullptr)
-					CurrentHoveredElement->OnHoverStop(PlayerPawn);
-				CurrentHoveredElement = Hoverable;
-				CurrentHoveredElement->OnHoverStart(PlayerPawn);
+					Cast<IHoverable>(CurrentHoveredElement)->OnHoverStop(PlayerPawn);
+				CurrentHoveredElement = HitResult.GetActor();
+				Hoverable->OnHoverStart(PlayerPawn);
 			}
 		}
 		else
 		{
 			if(CurrentHoveredElement != nullptr)
 			{
-				CurrentHoveredElement->OnHoverStop(PlayerPawn);
+				Cast<IHoverable>(CurrentHoveredElement)->OnHoverStop(PlayerPawn);
 				CurrentHoveredElement = nullptr;
 			}
 		}
@@ -50,7 +53,7 @@ void ACG_PlayerController::Tick(float DeltaSeconds)
 	{
 		if(CurrentHoveredElement != nullptr)
 		{
-			CurrentHoveredElement->OnHoverStop(PlayerPawn);
+			Cast<IHoverable>(CurrentHoveredElement)->OnHoverStop(PlayerPawn);
 			CurrentHoveredElement = nullptr;
 		}
 	}
@@ -58,16 +61,28 @@ void ACG_PlayerController::Tick(float DeltaSeconds)
 
 void ACG_PlayerController::OnSelectCard()
 {
-	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Select Card"));
 	FHitResult HitResult;
 	GetHitResultUnderCursorByChannel(TraceTypeQuery1, true, HitResult);
 
 	if (HitResult.bBlockingHit)
 	{
-		if(const auto Hoverable = Cast<IHoverableInterface>(HitResult.GetActor()))
+		if(const auto Selectable = Cast<ISelectable>(HitResult.GetActor()))
 		{
-			Hoverable->OnSelect(PlayerPawn);
-			SelectedCard = Hoverable;
+			if(CurrentSelectedElement != nullptr)
+			{
+				Cast<ISelectable>(CurrentSelectedElement)->OnRelease(PlayerPawn);
+			}
+			Selectable->OnSelect(PlayerPawn);
+			CurrentSelectedElement = HitResult.GetActor();
+		}
+		if(const auto Draggable = Cast<IDraggable>(HitResult.GetActor()))
+		{
+			Draggable->OnGrab(PlayerPawn);
+			CurrentSelectedElement = HitResult.GetActor();
+		}
+		if(const auto Clickable = Cast<IClickable>(HitResult.GetActor()))
+		{
+			Clickable->OnClick(PlayerPawn);
 		}
 	}
 }
@@ -75,7 +90,7 @@ void ACG_PlayerController::OnSelectCard()
 void ACG_PlayerController::OnDragCard()
 {
 	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Drag Card"));
-	if (SelectedCard != nullptr)
+	if (CurrentSelectedElement != nullptr)
 	{
 		float x;
 		float y;
@@ -85,18 +100,18 @@ void ACG_PlayerController::OnDragCard()
 
 		// Calculate the target position
 		FVector TargetLocation = WorldLocation + (WorldDirection * DistanceFromCamera);
-		SelectedCard->OnDrag(PlayerPawn, TargetLocation);
+		Cast<IDraggable>(CurrentSelectedElement)->OnDrag(PlayerPawn, TargetLocation);
 	}
 }
 
 void ACG_PlayerController::OnReleaseCard()
 {
 	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Release Card"));
-	if(SelectedCard != nullptr)
+	if(CurrentSelectedElement != nullptr)
 	{
-		SelectedCard->OnRelease(PlayerPawn);	
+		Cast<IDraggable>(CurrentSelectedElement)->OnRelease(PlayerPawn);	
 	}
-	SelectedCard = nullptr;
+	CurrentSelectedElement = nullptr;
 }
 
 FVector ACG_PlayerController::GetMouseLocationInWorld() const

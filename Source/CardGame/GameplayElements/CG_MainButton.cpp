@@ -14,32 +14,9 @@ ACG_MainButton::ACG_MainButton()
 void ACG_MainButton::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
-void ACG_MainButton::OnHoverStart(ACG_PlayerPawn* Pawn)
-{
-}
-
-void ACG_MainButton::OnHoverStop(ACG_PlayerPawn* Pawn)
-{
-}
-
-void ACG_MainButton::OnSelect(ACG_PlayerPawn* Pawn)
+void ACG_MainButton::OnClick(ACG_PlayerPawn* Pawn)
 {
 	Pawn->PlayCard();
 }
-
-void ACG_MainButton::OnRelease(ACG_PlayerPawn* Pawn)
-{
-}
-
-void ACG_MainButton::OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition)
-{
-}
-
-void ACG_MainButton::OnExamine(ACG_PlayerPawn* Pawn)
-{
-}
-
-

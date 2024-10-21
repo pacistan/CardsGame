@@ -6,7 +6,7 @@
 #include "CardGame/GameplayElements/CGTile.h"
 #include "CardGame/Macro/CGLogMacro.h"
 
-bool UCGCardProperty_Summon::Behvaviors(ACGTile* TargetTile, APawn* CardOwner)
+bool UCGCardProperty_Summon::Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner)
 {
 	if (!IsValid(TargetTile) || !IsValid(CardOwner)) {
 		DEBUG_LOG_SCREEN_SIMPLE("Target Tile or PawnOwner is not valid");

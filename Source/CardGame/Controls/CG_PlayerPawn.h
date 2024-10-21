@@ -23,6 +23,9 @@ class CARDGAME_API ACG_PlayerPawn : public APawn
 
 	
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
+	UPROPERTY()
+	int32 PlayerMultIndex = 1;
+	
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	float DistanceFromCamera;
 	
@@ -32,6 +35,9 @@ class CARDGAME_API ACG_PlayerPawn : public APawn
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))
 	int32 DefaultMaxNumCardToDraw;
 
+	UPROPERTY(EditAnywhere,Category="")
+	FVector2D HandPositionOffset;
+	
 	UPROPERTY()
 	int32 CurrentMaxNumCardToDraw;
 
@@ -46,6 +52,7 @@ class CARDGAME_API ACG_PlayerPawn : public APawn
 
 	UPROPERTY()
 	int32 SelectedCardIndex;
+
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 	
@@ -57,7 +64,9 @@ public:
 
 	DECLARE_GETTER(CurrentMaxNumCardToDraw, CurrentMaxNumCardToDraw, int32);
 	DECLARE_GETTER(DistanceFromCamera, DistanceFromCamera, float);
-
+	DECLARE_GETTER(PlayerMultIndex, PlayerMultIndex, int32);
+	DECLARE_GETTER(HandPositionOffset, HandPositionOffset, FVector2D);
+	
 	int32 GetCardIndex(ACGCardActor* Card)
 	{
 		if(PlayerHand.Contains(Card))
@@ -113,25 +122,10 @@ public:
 	}
 	
 	UFUNCTION()
-	void PlayCard()
-	{
-		if(SelectedCardIndex >= 0 && SelectedCardIndex < PlayerHand.Num())
-		{
-			PlayerHand[SelectedCardIndex]->OnCardPlayed();
-			PlayedCardIndexs.Add(SelectedCardIndex);
-			SelectedCardIndex = -1;
-		}
-	}
+	void PlayCard();
 
 	UFUNCTION()
-	void SelectCard(ACGCardActor* Card)
-	{
-		if(SelectedCardIndex >= 0 && SelectedCardIndex < PlayerHand.Num())
-		{
-			PlayerHand[SelectedCardIndex]->OnUnselect();
-		}
-		SelectedCardIndex = GetCardIndex(Card);
-	}
+	void SelectCard(ACGCardActor* Card);
 	
 protected:
 

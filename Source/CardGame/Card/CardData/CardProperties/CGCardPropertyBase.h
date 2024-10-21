@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CardGame/Controls/CG_PlayerPawn.h"
 #include "UObject/Object.h"
 #include "CGCardPropertyBase.generated.h"
 
@@ -23,8 +24,8 @@ protected:
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 public :
 	UFUNCTION()
-	virtual bool PreviewsBehvaviors(ACGTile* TargetTile, APawn* CardOwner) { return false; }
+	virtual bool PreviewsBehvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) { return false; }
 	
 	UFUNCTION()
-	virtual bool Behvaviors(ACGTile* TargetTile, APawn* CardOwner) { return false;}
+	virtual bool Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) { return false;}
 };

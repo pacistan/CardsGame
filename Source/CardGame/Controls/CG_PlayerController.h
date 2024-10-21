@@ -7,7 +7,7 @@
 #include "CG_PlayerController.generated.h"
 
 class ACG_PlayerPawn;
-class IHoverableInterface;
+class IHoverable;
 class ACGCardActor;
 class UInputMappingContext;
 class UInputAction;
@@ -34,9 +34,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayerPawn|Input", meta=(DisplayName = "Left Click Release Action"))
 	UInputAction* IA_ReleaseCard;
 
-	IHoverableInterface* CurrentHoveredElement;
+	TObjectPtr<AActor> CurrentHoveredElement;
 	
-	IHoverableInterface* SelectedCard;
+	TObjectPtr<AActor> CurrentSelectedElement;
+
+	TObjectPtr<AActor> CurrentDraggedElement;
 
 	UPROPERTY()
 	TObjectPtr<ACG_PlayerPawn> PlayerPawn;

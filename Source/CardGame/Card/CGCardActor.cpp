@@ -3,7 +3,9 @@
 #include "CardData/CardProperties/CGCardPropertyBase.h"
 #include "CardGame/Controls/CG_PlayerPawn.h"
 #include "CardGame/FSM/States/CGState_DrawPhase.h"
-#include "CardGame/Interfaces/HoverableInterface.h"
+#include "CardGame/GameplayElements/CGTile.h"
+#include "CardGame/Interfaces/Hoverable.h"
+#include "CardGame/Managers/CGGridManager.h"
 #include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -71,12 +73,14 @@ void ACGCardActor::InitiateMovement(bool IsHoveringOperation, ACG_PlayerPawn* Pa
 	StartRotator = GetActorRotation();
 	StartScale = GetActorScale();
 	
-	EndPosition = FVector(CameraLocation + (CameraRotation.Vector() * (CardOwner->GetDistanceFromCamera() - HoveredLayerNumber)) +
-		CameraRightVector * CardOffset * CardOwner->GetCardIndex(this) - 
-		CameraRightVector * CardOffset * (CardOwner->GetCurrentHandSize() - 1) / 2.0f -
-		CameraUpVector * CardHeightOffset * FMath::Abs(CardOwner->GetCardIndex(this) - (CardOwner->GetCurrentHandSize() - 1) / 2.0f) -
-		CameraUpVector * HandHeightOffset +
-		CameraUpVector * HoveredPositionOffset);
+	EndPosition = FVector(CameraLocation + (CameraRotation.Vector() * (CardOwner->GetDistanceFromCamera() - HoveredLayerNumber))
+		+ CameraRightVector * CardOwner->GetHandPositionOffset().X
+		+ CameraRightVector * CardOffset * CardOwner->GetCardIndex(this)
+		- CameraRightVector * CardOffset * (CardOwner->GetCurrentHandSize() - 1) / 2.0f
+		+ CameraUpVector * CardOwner->GetHandPositionOffset().Y
+		- CameraUpVector * CardHeightOffset * FMath::Abs(CardOwner->GetCardIndex(this) - (CardOwner->GetCurrentHandSize() - 1) / 2.0f)
+		- CameraUpVector * HandHeightOffset
+		+ CameraUpVector * HoveredPositionOffset);
 
 	EndRotator = StartRotator;
 	EndRotator.Roll = FMath::Lerp(
@@ -163,6 +167,26 @@ void ACGCardActor::OnSelect(ACG_PlayerPawn* Pawn)
 		InitiateMovement( true);
 		CardOwner->SelectCard(this);
 		CardMesh->SetMaterial(0, SelectedMat.Get());
+		ACGGridManager* GridManager = Cast<ACGGridManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ACGGridManager::StaticClass()));
+
+		ETileType TileType;
+		switch(CardOwner->GetPlayerMultIndex())
+		{
+		case 1:
+			TileType = ETileType::Player1;
+			break;
+		case 2:
+			TileType = ETileType::Player2;
+			break;
+		case 3:
+			TileType = ETileType::Player3;
+			break;
+		case 4:
+			TileType = ETileType::Player4;
+			break;
+		}
+		
+		GridManager->HighlightTiles(TileType);
 	}
 	else if(CurrentCardState == ECardState::PLAYED)
 	{
@@ -186,10 +210,7 @@ void ACGCardActor::OnRelease(ACG_PlayerPawn* Pawn)
 	//}
 }
 
-void ACGCardActor::OnDrag(ACG_PlayerPawn* Pawn, FVector MousePosition)
-{
-	//SetActorLocation( MousePosition);
-}
+
 
 void ACGCardActor::OnExamine(ACG_PlayerPawn* Pawn)
 {
