@@ -51,7 +51,7 @@ bool ACGTile::CanMoveOnTile(ACGTileObject_Unit* lUnit, ACG_PlayerPawn* Player) c
 	return true;
 }
 
-bool ACGTile::SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, ACG_PlayerPawn* Player)
+bool ACGTile::SummonOnTile(TSubclassOf<ACGTileObjectBase> Class, ACG_PlayerPawn* Player)
 {
 	if (!IsValid(Player) || !IsValid(Class) || !GetWorld()) {
 		return false;

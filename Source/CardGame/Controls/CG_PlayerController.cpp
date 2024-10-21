@@ -26,25 +26,40 @@ void ACG_PlayerController::SetupInputComponent()
 void ACG_PlayerController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	if(PlayerPawn == nullptr) return;
+
+	FVector2D MousePosition;
+	GetMousePosition(MousePosition.X, MousePosition.Y);
+	
 	FHitResult HitResult;
-	GetHitResultUnderCursorByChannel(TraceTypeQuery1, true, HitResult);
+	FVector WorldLocation, WorldDirection;
+	DeprojectScreenPositionToWorld(MousePosition.X, MousePosition.Y, WorldLocation, WorldDirection);
+
+	// Do a line trace based on the deprojected location and direction
+	FVector TraceEnd = WorldLocation + (WorldDirection * 1000000);
+	GetWorld()->LineTraceSingleByChannel(HitResult, WorldLocation, TraceEnd, ECC_Visibility);
+	IHoverable* HoverableActor = Cast<IHoverable>(HitResult.GetActor());
 	if (HitResult.bBlockingHit)
 	{
-		if(const auto Hoverable = Cast<IHoverable>(HitResult.GetActor()))
+		if(HoverableActor)
 		{
-			if(CurrentHoveredElement != HitResult.GetActor())
+			if(CurrentHoveredElement.GetInterface() != HoverableActor)
 			{
-				if(CurrentHoveredElement != nullptr)
-					Cast<IHoverable>(CurrentHoveredElement)->OnHoverStop(PlayerPawn);
-				CurrentHoveredElement = HitResult.GetActor();
-				Hoverable->OnHoverStart(PlayerPawn);
+				if(CurrentHoveredElement.GetObject() != nullptr)
+				{
+					CurrentHoveredElement->OnHoverStop(PlayerPawn);
+				}
+
+				CurrentHoveredElement.SetInterface(HoverableActor);
+				CurrentHoveredElement.SetObject(HitResult.GetActor());	
+				CurrentHoveredElement->OnHoverStart(PlayerPawn);
 			}
 		}
 		else
 		{
 			if(CurrentHoveredElement != nullptr)
 			{
-				Cast<IHoverable>(CurrentHoveredElement)->OnHoverStop(PlayerPawn);
+				CurrentHoveredElement->OnHoverStop(PlayerPawn);
 				CurrentHoveredElement = nullptr;
 			}
 		}
@@ -53,7 +68,7 @@ void ACG_PlayerController::Tick(float DeltaSeconds)
 	{
 		if(CurrentHoveredElement != nullptr)
 		{
-			Cast<IHoverable>(CurrentHoveredElement)->OnHoverStop(PlayerPawn);
+			CurrentHoveredElement->OnHoverStop(PlayerPawn);
 			CurrentHoveredElement = nullptr;
 		}
 	}
@@ -90,7 +105,7 @@ void ACG_PlayerController::OnSelectCard()
 void ACG_PlayerController::OnDragCard()
 {
 	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Drag Card"));
-	if (CurrentSelectedElement != nullptr)
+	if (CurrentDraggedElement != nullptr)
 	{
 		float x;
 		float y;
@@ -100,18 +115,18 @@ void ACG_PlayerController::OnDragCard()
 
 		// Calculate the target position
 		FVector TargetLocation = WorldLocation + (WorldDirection * DistanceFromCamera);
-		Cast<IDraggable>(CurrentSelectedElement)->OnDrag(PlayerPawn, TargetLocation);
+		Cast<IDraggable>(CurrentDraggedElement)->OnDrag(PlayerPawn, TargetLocation);
 	}
 }
 
 void ACG_PlayerController::OnReleaseCard()
 {
 	//GEngine->AddOnScreenDebugMessage(0, 10, FColor::Red, TEXT("Release Card"));
-	if(CurrentSelectedElement != nullptr)
+	if(CurrentDraggedElement != nullptr)
 	{
-		Cast<IDraggable>(CurrentSelectedElement)->OnRelease(PlayerPawn);	
+		Cast<IDraggable>(CurrentDraggedElement)->OnRelease(PlayerPawn);	
 	}
-	CurrentSelectedElement = nullptr;
+	CurrentDraggedElement = nullptr;
 }
 
 FVector ACG_PlayerController::GetMouseLocationInWorld() const

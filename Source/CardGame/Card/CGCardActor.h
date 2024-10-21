@@ -7,6 +7,7 @@
 #include "CardGame/Interfaces/Examinable.h"
 #include "CardGame/Interfaces/Hoverable.h"
 #include "CardGame/Interfaces/Selectable.h"
+#include "CardGame/Macro/CGGetSetMacro.h"
 #include "GameFramework/Actor.h"
 #include "CGCardActor.generated.h"
 
@@ -137,6 +138,8 @@ public:
 
 	UFUNCTION()
 	void RemoveCardFromPlayArray();
+
+	DECLARE_GETTER_SETTER(CardData, CardData, TSoftObjectPtr<UCGCardData_Base>);	
 	
 protected:
 	UFUNCTION()

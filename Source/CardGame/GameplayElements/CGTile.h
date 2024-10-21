@@ -85,7 +85,7 @@ public:
 	bool CanMoveOnTile(ACGTileObject_Unit* lUnit, ACG_PlayerPawn* Player) const;
 
 	UFUNCTION(BlueprintCallable)
-	bool SummonOnTile(TSubclassOf<ACGTileObject_Unit> Class, ACG_PlayerPawn* Player);
+	bool SummonOnTile(TSubclassOf<ACGTileObjectBase> Class, ACG_PlayerPawn* Player);
 
 	UFUNCTION(BlueprintCallable)
 	bool PlaceObjectOnTile(TSubclassOf<ACGTileObject_SpellItem> Class, ACG_PlayerPawn* Player);
@@ -126,6 +126,7 @@ public:
 	{
 		if(IsHighlighted && IsHovered)
 		{
+			Pawn->PlayCard(this);
 			//TODO: Apply Effect Card From Pawn
 		}
 		

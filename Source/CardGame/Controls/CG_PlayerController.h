@@ -34,7 +34,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayerPawn|Input", meta=(DisplayName = "Left Click Release Action"))
 	UInputAction* IA_ReleaseCard;
 
-	TObjectPtr<AActor> CurrentHoveredElement;
+	TScriptInterface<IHoverable> CurrentHoveredElement;
 	
 	TObjectPtr<AActor> CurrentSelectedElement;
 

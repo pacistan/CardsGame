@@ -7,6 +7,7 @@
 #include "GameFramework/Pawn.h"
 #include "CG_PlayerPawn.generated.h"
 
+class ACGTile;
 class AStaticMeshActor;
 class ACGCardActor;
 class UCG_DeckComponent;
@@ -122,7 +123,7 @@ public:
 	}
 	
 	UFUNCTION()
-	void PlayCard();
+	void PlayCard(ACGTile* Tile);
 
 	UFUNCTION()
 	void SelectCard(ACGCardActor* Card);

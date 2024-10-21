@@ -18,5 +18,5 @@ void ACG_MainButton::BeginPlay()
 
 void ACG_MainButton::OnClick(ACG_PlayerPawn* Pawn)
 {
-	Pawn->PlayCard();
+	Pawn->PlayCard(nullptr);
 }

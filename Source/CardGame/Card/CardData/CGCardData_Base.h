@@ -8,6 +8,7 @@
 #include "Engine/DataAsset.h"
 #include "CGCardData_Base.generated.h"
 
+class ACGTileObjectBase;
 class UCGCardPropertyBase;
 
 /**
@@ -45,6 +46,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, DisplayName = "Card Properties", Instanced , AssetRegistrySearchable)
 	TObjectPtr<UCGCardPropertyBase> CardProperty;
+
+	UPROPERTY(EditAnywhere, DisplayName = "Unit to Spawn", AssetRegistrySearchable)
+	TSubclassOf<ACGTileObjectBase> UnitToSpawn;
 	
 	/* ------------------------------------------ METHODS ------------------------------------------- */
 public:
@@ -57,4 +61,5 @@ public:
 	DECLARE_GETTER(CardPriority,CardPriority,int);
 	DECLARE_GETTER(CardType,CardType,FGameplayTag);
 	DECLARE_GETTER(CardProperty,CardProperty,TObjectPtr<UCGCardPropertyBase>);
+	DECLARE_GETTER(UnitToSpawn, UnitToSpawn, TSubclassOf<ACGTileObjectBase>);
 };

@@ -13,6 +13,7 @@
 ACGCardActor::ACGCardActor(FObjectInitializer const& ObjectInitializer) : Super(ObjectInitializer)
 {
 	CardMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Card Mesh"));
+	RootComponent = CardMesh;
 	CardWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Card Widget"));
 }
 
@@ -40,8 +41,8 @@ void ACGCardActor::InitiateMovement(bool IsHoveringOperation, ACG_PlayerPawn* Pa
 	const FVector CameraRightVector = FRotationMatrix(CameraRotation).GetScaledAxis(EAxis::Y);
 	const FVector CameraUpVector = FRotationMatrix(CameraRotation).GetScaledAxis(EAxis::Z);
 
-	float HoveredPositionOffset;
-	int32 HoveredLayerNumber;
+	float HoveredPositionOffset = 0;
+	int32 HoveredLayerNumber = 0;
 	switch(CurrentCardState)
 	{
 	case ECardState::INACTIVE:
@@ -167,7 +168,7 @@ void ACGCardActor::OnSelect(ACG_PlayerPawn* Pawn)
 		CardMesh->SetMaterial(0, SelectedMat.Get());
 		ACGGridManager* GridManager = Cast<ACGGridManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ACGGridManager::StaticClass()));
 
-		ETileType TileType;
+		ETileType TileType = ETileType::Normal;
 		switch(CardOwner->GetPlayerMultIndex())
 		{
 		case 1:

@@ -1,8 +1,12 @@
 ﻿#include "CG_PlayerPawn.h"
 #include "CardGame/Card/CGCardActor.h"
+#include "CardGame/Card/CardData/CGCardData_Base.h"
+#include "CardGame/Card/CardData/CardProperties/CGCardProperty_Summon.h"
 #include "CardGame/Card/Deck/CG_DeckActor.h"
 #include "CardGame/Card/Deck/CG_DeckComponent.h"
 #include "CardGame/FSM/States/CGState_DrawPhase.h"
+#include "CardGame/GameplayElements/CGTile.h"
+#include "CardGame/GameplayElements/TileObject/CGTileObjectBase.h"
 #include "CardGame/Managers/CGGameMode.h"
 #include "Engine/StaticMeshActor.h"
 #include "Kismet/GameplayStatics.h"
@@ -46,8 +50,21 @@ bool ACG_PlayerPawn::RegisterPlayerToGameMode_Validate()
 	return true;
 }
 
-void ACG_PlayerPawn::PlayCard()
+void ACG_PlayerPawn::PlayCard(ACGTile* Tile)
 {
+	const auto Card = PlayerHand[SelectedCardIndex]->GetCardData().Get();
+
+	if(Card == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No card Data"));
+		return;
+	}
+	if(Card->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Unit")))
+	{
+		Tile->SummonOnTile(Card->GetUnitToSpawn(), this);
+	}
+
+	
 	if(SelectedCardIndex >= 0 && SelectedCardIndex < PlayerHand.Num())
 	{
 		PlayerHand[SelectedCardIndex]->OnCardPlayed();

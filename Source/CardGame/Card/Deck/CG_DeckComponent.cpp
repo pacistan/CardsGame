@@ -23,7 +23,9 @@ ACGCardActor* UCG_DeckComponent::CreateCard(const FVector& SpawnLocation, const 
 	
 	if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Unit")))
 	{
-		return GetWorld()->SpawnActor<ACGCardActor>(CardUnitPrefab, SpawnLocation, SpawnRotation, SpawnParams);
+		auto Card =  GetWorld()->SpawnActor<ACGCardActor>(CardUnitPrefab, SpawnLocation, SpawnRotation, SpawnParams);
+		Card->SetCardData(CardData);
+		return Card;
 	}
 	else if(CardData->GetCardType() == FGameplayTag::RequestGameplayTag(FName("TileObject.Type.Spell")))
 	{

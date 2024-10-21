@@ -12,5 +12,5 @@ class CARDGAME_API UCGCardProperty_Move : public UCGCardPropertyBase
 	/* ------------------------------------------ METHODS -------------------------------------------*/
 	/* ------------------------------------------ OVERRIDES -------------------------------------------*/
 protected:
-	virtual bool Behvaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) override;
+	virtual bool Behaviors(ACGTile* TargetTile, ACG_PlayerPawn* CardOwner) override;
 };
