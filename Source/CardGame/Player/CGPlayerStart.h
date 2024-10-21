@@ -12,9 +12,18 @@ class CARDGAME_API ACGPlayerStart : public APlayerStart
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 protected:
+	/** The controller that claimed this PlayerStart */
+	UPROPERTY(Transient)
+	TObjectPtr<AController> ClaimingController = nullptr;
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 public:
+	/** Did this player start get claimed by a controller already? */
+	bool IsClaimed() const;
 	
+	/** If this PlayerStart was not claimed, claim it for ClaimingController */
+	bool TryClaim(AController* OccupyingController);
+	
+protected:
 	/* ------------------------------------------ OVERRIDE -------------------------------------------*/
 };

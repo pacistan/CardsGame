@@ -7,6 +7,8 @@
 #include "GameFramework/PlayerState.h"
 #include "CGPlayerState.generated.h"
 
+class ACGPlayerPawn;
+class ACG_PlayerController;
 /**
  * 
  */
@@ -16,11 +18,25 @@ class CARDGAME_API ACGPlayerState : public APlayerState
 	GENERATED_BODY()
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 protected:
-	// Class to instantiate for this pawn (need to derive if ACGPlayerPawn)
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CG|Pawn")
-	TSubclassOf<APawn> PawnClass;
-	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
+	UFUNCTION(BlueprintCallable, Category = "CG|PlayerState")
+	ACG_PlayerController* GetCGPlayerController() const;
+
 public:
-	DECLARE_GETTER(PawnClass, PawnClass, TSubclassOf<APawn>)
+	
+	// Class to instantiate for this pawn (need to derive if ACGPlayerPawn)
+	UPROPERTY(Replicated)
+	TSubclassOf<ACGPlayerPawn> PawnClass;
+	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
+protected:
+	
+public:
+	ACGPlayerState(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	void SetPawnClass(const TSubclassOf<ACGPlayerPawn> InPawnClass);
 	/* ------------------------------------------ OVERRIDE -------------------------------------------*/
+	
+	//~AActor interface
+	virtual void PreInitializeComponents() override;
+	virtual void PostInitializeComponents() override;
+	//~End of AActor interface
 };

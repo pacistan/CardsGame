@@ -20,7 +20,6 @@ UCLASS()
 class CARDGAME_API ACGPlayerPawn : public APawn
 {
 	GENERATED_BODY()
-
 	
 	/* ------------------------------------------ MEMBERS -------------------------------------------*/
 	UPROPERTY(EditAnywhere, Category="", meta=(AllowPrivateAccess))

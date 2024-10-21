@@ -1,7 +1,7 @@
 ﻿#include "CGState_DrawPhase.h"
 #include "CGState_MainPhase.h"
 #include "CG_FSM.h"
-#include "CardGame/Controls/CG_PlayerPawn.h"
+#include "CardGame/Player/CGPlayerPawn.h"
 #include "CardGame/Macro/CGLogMacro.h"
 #include "CardGame/Managers/CGGameMode.h"
 

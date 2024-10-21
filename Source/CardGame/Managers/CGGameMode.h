@@ -40,16 +40,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UCGBaseState> StartState;
 
-	UPROPERTY(Transient)
-	TArray<TWeakObjectPtr<ACGPlayerStart>> CachedPlayerStarts;
-	
 public:
 	// Delegate called on player initialization
 	FOnCGGameModePlayerInitialized OnGameModePlayerInitialized;
 	
 	/* ------------------------------------------ FUNCTIONS -------------------------------------------*/
 protected:
-
+	void HostDedicatedServer();
+	
 public:
 	ACGGameMode(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
@@ -59,10 +57,6 @@ public:
 	// - If bForceReset is true, the controller will be reset this frame (abandoning the currently possessed pawn, if any)
 	UFUNCTION(BlueprintCallable)
 	void RequestPlayerRestartNextFrame(AController* Controller, bool bForceReset = false);
-
-#if WITH_EDITOR
-	APlayerStart* FindPlayFromHereStart(AController* Player);
-#endif
 	
 	DECLARE_GETTER(FSM, FSM, TObjectPtr<UCG_FSM>);
 	DECLARE_GETTER(PlayerPawn, Players, TArray<TObjectPtr<ACGPlayerPawn>>);
@@ -74,6 +68,9 @@ public:
 			return Decks[PlayerIndex];
 		return nullptr;
 	}
+
+	UFUNCTION(BlueprintCallable, Category = "CG|Pawn")
+	TSubclassOf<ACGPlayerPawn> GetPawnClassForController(const AController* InController) const;
 	
 	/* ------------------------------------------ OVERRIDE -------------------------------------------*/
 	virtual void BeginPlay() override;
@@ -92,5 +89,6 @@ public:
 	virtual void GenericPlayerInitialization(AController* NewPlayer) override;
 	virtual void FailedToRestartPlayer(AController* NewPlayer) override;
 	//~End of AGameModeBase interface
+	
 	
 };

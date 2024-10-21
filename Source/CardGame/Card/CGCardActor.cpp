@@ -1,7 +1,7 @@
 #include "CGCardActor.h"
 #include "CardData/CGCardData_Base.h"
 #include "CardData/CardProperties/CGCardPropertyBase.h"
-#include "CardGame/Controls/CG_PlayerPawn.h"
+#include "CardGame/Player/CGPlayerPawn.h"
 #include "CardGame/FSM/States/CGState_DrawPhase.h"
 #include "CardGame/Interfaces/HoverableInterface.h"
 #include "Components/WidgetComponent.h"

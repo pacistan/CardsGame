@@ -118,7 +118,8 @@ void ACG_PlayerController::AddDefaultMappingContext() const
 void ACG_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	PlayerPawn = Cast<ACGPlayerPawn>(GetPawn());
-	AddDefaultMappingContext();
+	SetActorHiddenInGame(false);
+	// PlayerPawn = Cast<ACGPlayerPawn>(GetPawn());
+	// AddDefaultMappingContext();
 	bShowMouseCursor = true;
 }

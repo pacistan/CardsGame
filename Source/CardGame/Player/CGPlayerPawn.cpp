@@ -35,8 +35,7 @@ void ACGPlayerPawn::DrawCard(const FOnDrawEnd& DrawEndDelegate)
 
 void ACGPlayerPawn::RegisterPlayerToGameMode_Implementation()
 {
-	if (HasAuthority())
-	{
+	if (HasAuthority()) {
 		Cast<ACGGameMode>(GetWorld()->GetAuthGameMode())->RegisterPlayerPawn(this);
 	}
 }
@@ -49,10 +48,10 @@ bool ACGPlayerPawn::RegisterPlayerToGameMode_Validate()
 void ACGPlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	PlayerHand = *new TArray<ACGCardActor*>();
+	PlayerHand = TArray<ACGCardActor*> {};
 	PlayerHand.Reserve(5);
 	CurrentMaxNumCardToDraw = DefaultMaxNumCardToDraw;
-	DeckActorLocation = Cast<ACGGameMode>(GetWorld()->GetAuthGameMode())->GetDeck(0)->GetActorLocation();
+	// DeckActorLocation = Cast<ACGGameMode>(GetWorld()->GetAuthGameMode())->GetDeck(0)->GetActorLocation();
 	PlayedCardIndexs = TArray<int32>();
 	PlayedCardIndexs.Reserve(5);
 }

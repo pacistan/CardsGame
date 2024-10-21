@@ -3,7 +3,7 @@
 
 #include "CG_MainButton.h"
 
-#include "CardGame/Controls/CG_PlayerPawn.h"
+#include "CardGame/Player/CGPlayerPawn.h"
 
 
 ACG_MainButton::ACG_MainButton()
